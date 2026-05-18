@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercício 1 – Relacione as saudações</title>
+<style>
+  body { font-family: Arial, sans-serif; font-size: 18px; background: #f9f9f9; color: #222; margin: 0; padding: 20px; }
+  .cabecalho { background: #1a5c3a; color: white; padding: 20px 24px; border-radius: 10px; margin-bottom: 24px; }
+  .cabecalho h1 { margin: 0 0 6px; font-size: 22px; }
+  .cabecalho p  { margin: 0; font-size: 15px; opacity: 0.85; }
+
+  .instrucao {
+    background: #e8f5ee;
+    border: 1px solid #b2d8c0;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 28px;
+    font-size: 17px;
+    line-height: 1.8;
+  }
+  .instrucao strong { color: #1a5c3a; }
+
+  /* TABELA REFERÊNCIA */
+  .tabela-ref {
+    background: white;
+    border-left: 6px solid #1a5c3a;
+    padding: 18px 20px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 28px;
+  }
+  .tabela-ref h2 { font-size: 16px; color: #1a5c3a; margin: 0 0 16px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+  .saudacao-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    background: #f5fbf7;
+    border-radius: 8px;
+    border-left: 4px solid #1a5c3a;
+  }
+  .saudacao-num { font-size: 18px; font-weight: bold; color: #1a5c3a; min-width: 28px; }
+  .saudacao-texto { font-size: 22px; font-weight: bold; color: #1a4a7a; }
+
+  /* EXERCÍCIO */
+  .secao { background: white; border: 1px solid #ddd; border-radius: 10px; padding: 20px 22px; margin-bottom: 20px; }
+  .secao h3 { font-size: 18px; color: #1a5c3a; margin: 0 0 4px; }
+  .secao .subtitulo { font-size: 15px; color: #555; margin: 0 0 20px; background: #f5fbf7; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #1a5c3a; }
+
+  .linha-ex {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+    padding: 12px 16px;
+    background: #f9f9f9;
+    border-radius: 8px;
+  }
+  .momento { font-size: 18px; color: #444; font-weight: bold; min-width: 180px; }
+  select {
+    font-size: 16px;
+    padding: 10px 14px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    cursor: pointer;
+    background: white;
+    min-width: 240px;
+  }
+  select:focus { border-color: #1a5c3a; }
+  select.certo  { border-color: #27ae60; background: #f0faf4; }
+  select.errado { border-color: #c0392b; background: #fdf3f2; }
+
+  .feedback { font-size: 15px; font-weight: bold; display: none; }
+  .feedback.ok  { color: #27ae60; display: inline; }
+  .feedback.nao { color: #c0392b; display: inline; }
+
+  .botoes { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+  .btn { font-size: 17px; font-weight: bold; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; }
+  .btn-verificar { background: #1a5c3a; color: white; }
+  .btn-gabarito  { background: #f0c040; color: #333; }
+  .btn-limpar    { background: white; color: #1a5c3a; border: 2px solid #1a5c3a; }
+
+  .resultado { display: none; margin-top: 20px; padding: 16px 20px; border-radius: 8px; font-size: 18px; font-weight: bold; }
+  .aprovado  { background: #e8f8ef; color: #1a6e3a; border: 2px solid #27ae60; }
+  .revisao   { background: #fef9ec; color: #7d5a00; border: 2px solid #f0c040; }
+  .reprovado { background: #fdecea; color: #922b21; border: 2px solid #c0392b; }
+
+  .gabarito { display: none; margin-top: 20px; background: #e8f5ee; border-radius: 8px; padding: 18px 20px; border: 1px solid #b2d8c0; }
+  .gabarito h3 { color: #1a5c3a; margin: 0 0 12px; font-size: 17px; }
+  .gabarito-item { font-size: 16px; margin-bottom: 8px; padding: 10px 14px; background: white; border-radius: 6px; border-left: 4px solid #1a5c3a; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .gabarito-item .g-num  { font-weight: bold; color: #1a5c3a; font-size: 18px; min-width: 28px; }
+  .gabarito-item .g-saud { font-weight: bold; color: #1a4a7a; font-size: 17px; min-width: 200px; }
+  .gabarito-item .g-mom  { color: #666; font-size: 15px; }
+</style>
+</head>
+<body>
+
+<div class="cabecalho">
+  <h1>Exercício 1 – Relacione</h1>
+  <p>Aula 02 — Ligue a saudação ao momento do dia</p>
+</div>
+
+<div class="instrucao">
+  ✏️ <strong>Exercício 1 – Relacione. Ligue a saudação ao momento do dia:</strong>
+</div>
+
+<!-- REFERÊNCIA -->
+<div class="tabela-ref">
+  <h2>📖 Saudações em Esperanto</h2>
+  <div class="saudacao-item"><div class="saudacao-num">1</div><div class="saudacao-texto">Bonan nokton!</div></div>
+  <div class="saudacao-item"><div class="saudacao-num">2</div><div class="saudacao-texto">Bonan matenon!</div></div>
+  <div class="saudacao-item"><div class="saudacao-num">3</div><div class="saudacao-texto">Bonan tagon!</div></div>
+  <div class="saudacao-item"><div class="saudacao-num">4</div><div class="saudacao-texto">Bonan vesperon!</div></div>
+  <div class="saudacao-item"><div class="saudacao-num">5</div><div class="saudacao-texto">Ĝis revido!</div></div>
+</div>
+
+<!-- EXERCÍCIO -->
+<div class="secao">
+  <h3>✏️ Relacione — escolha o número correto</h3>
+  <div class="subtitulo">Para cada momento do dia, selecione o número da saudação correspondente.</div>
+
+  <div class="linha-ex">
+    <div class="momento">Manhã</div>
+    <select id="s1">
+      <option value="">— selecione —</option>
+      <option value="1">1 — Bonan nokton!</option>
+      <option value="2">2 — Bonan matenon!</option>
+      <option value="3">3 — Bonan tagon!</option>
+      <option value="4">4 — Bonan vesperon!</option>
+      <option value="5">5 — Ĝis revido!</option>
+    </select>
+    <span class="feedback" id="fs1"></span>
+  </div>
+
+  <div class="linha-ex">
+    <div class="momento">Noite (partindo)</div>
+    <select id="s2">
+      <option value="">— selecione —</option>
+      <option value="1">1 — Bonan nokton!</option>
+      <option value="2">2 — Bonan matenon!</option>
+      <option value="3">3 — Bonan tagon!</option>
+      <option value="4">4 — Bonan vesperon!</option>
+      <option value="5">5 — Ĝis revido!</option>
+    </select>
+    <span class="feedback" id="fs2"></span>
+  </div>
+
+  <div class="linha-ex">
+    <div class="momento">Dia / tarde</div>
+    <select id="s3">
+      <option value="">— selecione —</option>
+      <option value="1">1 — Bonan nokton!</option>
+      <option value="2">2 — Bonan matenon!</option>
+      <option value="3">3 — Bonan tagon!</option>
+      <option value="4">4 — Bonan vesperon!</option>
+      <option value="5">5 — Ĝis revido!</option>
+    </select>
+    <span class="feedback" id="fs3"></span>
+  </div>
+
+  <div class="linha-ex">
+    <div class="momento">Noite (chegando)</div>
+    <select id="s4">
+      <option value="">— selecione —</option>
+      <option value="1">1 — Bonan nokton!</option>
+      <option value="2">2 — Bonan matenon!</option>
+      <option value="3">3 — Bonan tagon!</option>
+      <option value="4">4 — Bonan vesperon!</option>
+      <option value="5">5 — Ĝis revido!</option>
+    </select>
+    <span class="feedback" id="fs4"></span>
+  </div>
+
+  <div class="linha-ex">
+    <div class="momento">Despedida geral</div>
+    <select id="s5">
+      <option value="">— selecione —</option>
+      <option value="1">1 — Bonan nokton!</option>
+      <option value="2">2 — Bonan matenon!</option>
+      <option value="3">3 — Bonan tagon!</option>
+      <option value="4">4 — Bonan vesperon!</option>
+      <option value="5">5 — Ĝis revido!</option>
+    </select>
+    <span class="feedback" id="fs5"></span>
+  </div>
+</div>
+
+<div class="botoes">
+  <button class="btn btn-verificar" onclick="verificar()">✔ Verificar</button>
+  <button class="btn btn-gabarito"  onclick="verGabarito()">🔑 Ver gabarito</button>
+  <button class="btn btn-limpar"    onclick="limpar()">↺ Limpar</button>
+</div>
+
+<div class="resultado" id="resultado"></div>
+<div class="gabarito"  id="gabarito"></div>
+
+<script>
+// Gabarito: momento → número correto da saudação
+const gabarito = {
+  s1: "2", // Manhã → Bonan matenon!
+  s2: "1", // Noite (partindo) → Bonan nokton!
+  s3: "3", // Dia / tarde → Bonan tagon!
+  s4: "4", // Noite (chegando) → Bonan vesperon!
+  s5: "5"  // Despedida geral → Ĝis revido!
+};
+
+function verificar(){
+  let total=0, acertos=0;
+  Object.keys(gabarito).forEach(id=>{
+    const sel = document.getElementById(id);
+    const fb  = document.getElementById("f"+id);
+    if(!sel || !fb || !sel.value) return;
+    total++;
+    sel.classList.remove("certo","errado");
+    fb.className = "feedback"; fb.textContent = "";
+    if(sel.value === gabarito[id]){
+      sel.classList.add("certo"); fb.className="feedback ok"; fb.textContent="✓"; acertos++;
+    } else {
+      sel.classList.add("errado"); fb.className="feedback nao"; fb.textContent="✗";
+    }
+  });
+  if(total===0){
+    const res=document.getElementById("resultado");
+    res.style.display="block"; res.className="resultado revisao";
+    res.innerHTML="✏️ Selecione pelo menos uma opção para verificar!"; return;
+  }
+  const res = document.getElementById("resultado");
+  res.style.display = "block";
+  const pct = Math.round(acertos/total*100);
+  if(pct>=80){ res.className="resultado aprovado"; res.innerHTML="🎉 Parabéns! Você acertou "+acertos+" de "+total+" — Bonega!"; }
+  else if(pct>=50){ res.className="resultado revisao"; res.innerHTML="🙂 Você acertou "+acertos+" de "+total+". Revise e tente novamente!"; }
+  else { res.className="resultado reprovado"; res.innerHTML="💪 Você acertou "+acertos+" de "+total+". Releia as saudações e tente de novo!"; }
+}
+
+function verGabarito(){
+  const g = document.getElementById("gabarito");
+  if(g.style.display==="block"){ g.style.display="none"; return; }
+  g.style.display="block";
+  g.innerHTML = `<h3>🔑 Gabarito</h3>
+    <div class="gabarito-item"><div class="g-num">1</div><div class="g-saud">Bonan nokton!</div><div class="g-mom">Noite (partindo)</div></div>
+    <div class="gabarito-item"><div class="g-num">2</div><div class="g-saud">Bonan matenon!</div><div class="g-mom">Manhã</div></div>
+    <div class="gabarito-item"><div class="g-num">3</div><div class="g-saud">Bonan tagon!</div><div class="g-mom">Dia / tarde</div></div>
+    <div class="gabarito-item"><div class="g-num">4</div><div class="g-saud">Bonan vesperon!</div><div class="g-mom">Noite (chegando)</div></div>
+    <div class="gabarito-item"><div class="g-num">5</div><div class="g-saud">Ĝis revido!</div><div class="g-mom">Despedida geral</div></div>`;
+}
+
+function limpar(){
+  Object.keys(gabarito).forEach(id=>{
+    const sel=document.getElementById(id);
+    const fb=document.getElementById("f"+id);
+    if(sel){ sel.selectedIndex=0; sel.classList.remove("certo","errado"); }
+    if(fb){ fb.className="feedback"; fb.textContent=""; }
+  });
+  document.getElementById("resultado").style.display="none";
+  document.getElementById("gabarito").style.display="none";
+}
+</script>
+</body>
+</html>
