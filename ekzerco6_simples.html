@@ -64,7 +64,7 @@
 
   <div class="bullet">
     <p><strong>Apoio a Traduções:</strong> A FEB colabora com editoras (como a Editora Lorenz) e tradutores para converter obras espíritas para o Esperanto.</p>
-    <p class="eo"><strong>Subteno al tradukoj:</strong> FEB kunlaboras kun eldonejoj (kiel Eldonejo Lorenz) kaj tradukistoj por konverti spiritismajn verkojn al Esperanto</p>
+    <p class="eo"><strong>Subteno al tradukoj:</strong> FEB kunlaboras kun eldonejoj (kiel Eldonejo Lorenz) kaj tradukistoj por esperantigi spiritismajn verkojn.</p>
   </div>
 
   <div class="bullet">
@@ -136,17 +136,22 @@
 <!-- 6.4 -->
 <div class="secao">
   <h3>6.4 — Palavras terminadas em <code>-oj</code> e <code>-on</code></h3>
-  <div class="subtitulo">Substantivos no plural (-oj) e no acusativo singular (-on). Escreva 3 de cada.</div>
+  <div class="subtitulo">Há 6 palavras com -oj e 5 com -on no texto. Encontre todas!</div>
 
-  <div class="subsecao">Terminação -oj (substantivo plural):</div>
+  <div class="subsecao">Terminação -oj (substantivo plural) — há 6:</div>
   <div class="linha"><label>Palavra 1:</label><input type="text" id="e1" placeholder="escreva aqui"><span class="feedback" id="fe1"></span></div>
   <div class="linha"><label>Palavra 2:</label><input type="text" id="e2" placeholder="escreva aqui"><span class="feedback" id="fe2"></span></div>
   <div class="linha"><label>Palavra 3:</label><input type="text" id="e3" placeholder="escreva aqui"><span class="feedback" id="fe3"></span></div>
+  <div class="linha"><label>Palavra 4:</label><input type="text" id="e4" placeholder="escreva aqui"><span class="feedback" id="fe4"></span></div>
+  <div class="linha"><label>Palavra 5:</label><input type="text" id="e5" placeholder="escreva aqui"><span class="feedback" id="fe5"></span></div>
+  <div class="linha"><label>Palavra 6:</label><input type="text" id="e6" placeholder="escreva aqui"><span class="feedback" id="fe6"></span></div>
 
-  <div class="subsecao">Terminação -on (substantivo singular acusativo):</div>
+  <div class="subsecao">Terminação -on (substantivo singular acusativo) — há 5:</div>
   <div class="linha"><label>Palavra 1:</label><input type="text" id="f1" placeholder="escreva aqui"><span class="feedback" id="ff1"></span></div>
   <div class="linha"><label>Palavra 2:</label><input type="text" id="f2" placeholder="escreva aqui"><span class="feedback" id="ff2"></span></div>
   <div class="linha"><label>Palavra 3:</label><input type="text" id="f3" placeholder="escreva aqui"><span class="feedback" id="ff3"></span></div>
+  <div class="linha"><label>Palavra 4:</label><input type="text" id="f4" placeholder="escreva aqui"><span class="feedback" id="ff4"></span></div>
+  <div class="linha"><label>Palavra 5:</label><input type="text" id="f5" placeholder="escreva aqui"><span class="feedback" id="ff5"></span></div>
 </div>
 
 <div class="botoes">
@@ -175,8 +180,8 @@ const mapa = {
   b1:"b", b2:"b",
   c1:"c", c1s:"cs",
   d1:"d", d1s:"ds", d2:"d", d2s:"ds", d3:"d", d3s:"ds",
-  e1:"e", e2:"e", e3:"e",
-  f1:"f", f2:"f", f3:"f"
+  e1:"e", e2:"e", e3:"e", e4:"e", e5:"e", e6:"e",
+  f1:"f", f2:"f", f3:"f", f4:"f", f5:"f"
 };
 
 function norm(s){ return s.trim().toLowerCase(); }
