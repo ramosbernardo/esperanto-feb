@@ -208,19 +208,17 @@
 <!-- 3.1 -->
 <div class="secao">
   <h3>3.1 — Palavras terminadas em <code>-as</code></h3>
-  <div class="subtitulo">Verbo no presente — exemplo: <em>estas</em> (é/está)</div>
-  <div class="linha"><label>Palavra 1:</label><input type="text" id="a1" placeholder="escreva aqui"><span class="feedback" id="fa1"></span></div>
-  <div class="linha"><label>Palavra 2:</label><input type="text" id="a2" placeholder="escreva aqui"><span class="feedback" id="fa2"></span></div>
-  <div class="linha"><label>Palavra 3:</label><input type="text" id="a3" placeholder="escreva aqui"><span class="feedback" id="fa3"></span></div>
+  <div class="subtitulo">Verbo no presente — ⚠️ Há 2 no texto. Exemplo: <em>estas</em> (é/está)</div>
+  <div class="linha"><label>Verbo 1:</label><input type="text" id="a1" placeholder="escreva aqui"><span class="feedback" id="fa1"></span></div>
+  <div class="linha"><label>Verbo 2:</label><input type="text" id="a2" placeholder="escreva aqui"><span class="feedback" id="fa2"></span></div>
 </div>
 
 <!-- 3.2 -->
 <div class="secao">
   <h3>3.2 — Palavras terminadas em <code>-i</code></h3>
-  <div class="subtitulo">Verbo no infinitivo — exemplo: <em>lerni</em> (aprender)</div>
-  <div class="linha"><label>Palavra 1:</label><input type="text" id="b1" placeholder="escreva aqui"><span class="feedback" id="fb1"></span></div>
-  <div class="linha"><label>Palavra 2:</label><input type="text" id="b2" placeholder="escreva aqui"><span class="feedback" id="fb2"></span></div>
-  <div class="linha"><label>Palavra 3:</label><input type="text" id="b3" placeholder="escreva aqui"><span class="feedback" id="fb3"></span></div>
+  <div class="subtitulo">Verbo no infinitivo — ⚠️ Há 2 no texto. Exemplo: <em>lerni</em> (aprender)</div>
+  <div class="linha"><label>Verbo 1:</label><input type="text" id="b1" placeholder="escreva aqui"><span class="feedback" id="fb1"></span></div>
+  <div class="linha"><label>Verbo 2:</label><input type="text" id="b2" placeholder="escreva aqui"><span class="feedback" id="fb2"></span></div>
 </div>
 
 <!-- 3.3 -->
@@ -246,16 +244,16 @@
 <script>
 // Grupos de respostas aceitas (qualquer ordem)
 const grupos = {
-  a: ["uzas","instigi","motivas"],   // -as
-  b: ["instigi","lerni","prezentante"],  // -i infinitivo
-  c: ["publikaĵoj","periodaĵoj"],    // -aĵ
-  cs: ["publicações","periódicos"],  // significados
+  a: ["uzas","motivas"],        // -as (presente)
+  b: ["instigi","lerni"],       // -i (infinitivo)
+  c: ["publikaĵoj","periodaĵoj"],  // -aĵ
+  cs: ["publicações","periódicos"], // significados
 };
 
 // Campos e seus grupos
 const mapa = {
-  a1:"a", a2:"a", a3:"a",
-  b1:"b", b2:"b", b3:"b",
+  a1:"a", a2:"a",
+  b1:"b", b2:"b",
   c1:"c", c2:"c",
   c1s:"cs", c2s:"cs"
 };
@@ -313,18 +311,14 @@ function verGabarito(){
 
     <div class="gabarito-secao">3.1 — Terminação <strong>-as</strong> (verbo no presente):</div>
     <div class="gabarito-item"><strong>uzas</strong> <span>utiliza</span></div>
-    <div class="gabarito-item"><strong>instigi</strong> <span>— atenção: instigi termina em -i (infinitivo)</span></div>
     <div class="gabarito-item"><strong>motivas</strong> <span>motiva</span></div>
 
     <div class="gabarito-secao">3.2 — Terminação <strong>-i</strong> (verbo no infinitivo):</div>
     <div class="gabarito-item"><strong>instigi</strong> <span>incentivar</span></div>
     <div class="gabarito-item"><strong>lerni</strong> <span>aprender</span></div>
-    <div class="gabarito-item"><strong>prezentante</strong> <span>apresentando</span></div>
 
     <div class="gabarito-secao">3.3 — Sufixo <strong>-aĵ</strong> (coisa concreta):</div>
     <div class="gabarito-item"><strong>publikaĵoj</strong> <span>publicações</span></div>
-    <div class="gabarito-item"><strong>periodaĵoj</strong> <span>periódicos</span></div>
-
     <div class="gabarito-item"><strong>periodaĵoj</strong> <span>periódicos</span></div>`;
 }
 
