@@ -202,8 +202,7 @@
   💡 <strong>Dica gramatical:</strong><br>
   Em Esperanto os <strong>verbos no presente</strong> terminam em <strong>-as</strong>.<br>
   Os <strong>verbos no infinitivo</strong> terminam em <strong>-i</strong>.<br>
-  O <strong>sufixo -aĵ</strong> indica "coisa concreta relacionada a".<br>
-  O pronome <strong>ĝi</strong> = ele/ela (para coisas e animais).
+  O <strong>sufixo -aĵ</strong> indica "coisa concreta relacionada a".
 </div>
 
 <!-- 3.1 -->
@@ -234,14 +233,6 @@
   <div class="linha"><label>Significado:</label><input type="text" id="c2s" placeholder="significado em português"><span class="feedback" id="fc2s"></span></div>
 </div>
 
-<!-- 3.4 -->
-<div class="secao">
-  <h3>3.4 — Palavras que começam com <code>ĝi</code></h3>
-  <div class="subtitulo">Pronome — exemplo: <em>ĝi</em> (ele/ela para coisas)</div>
-  <div class="linha"><label>Palavra 1:</label><input type="text" id="d1" placeholder="escreva aqui"><span class="feedback" id="fd1"></span></div>
-  <div class="linha"><label>Palavra 2:</label><input type="text" id="d2" placeholder="escreva aqui"><span class="feedback" id="fd2"></span></div>
-</div>
-
 <!-- BOTÕES -->
 <div class="botoes">
   <button class="btn btn-verificar" onclick="verificar()">✔ Verificar</button>
@@ -259,7 +250,6 @@ const grupos = {
   b: ["instigi","lerni","prezentante"],  // -i infinitivo
   c: ["publikaĵoj","periodaĵoj"],    // -aĵ
   cs: ["publicações","periódicos"],  // significados
-  d: ["ĝin","ĝenerale"]             // ĝi-
 };
 
 // Campos e seus grupos
@@ -267,8 +257,7 @@ const mapa = {
   a1:"a", a2:"a", a3:"a",
   b1:"b", b2:"b", b3:"b",
   c1:"c", c2:"c",
-  c1s:"cs", c2s:"cs",
-  d1:"d", d2:"d"
+  c1s:"cs", c2s:"cs"
 };
 
 function norm(s){ return s.trim().toLowerCase(); }
@@ -276,7 +265,7 @@ function norm(s){ return s.trim().toLowerCase(); }
 function verificar(){
   let total=0, acertos=0;
   // controla quais palavras do grupo já foram "usadas" (evita contar duplicatas)
-  const usados = { a:[], b:[], c:[], cs:[], d:[] };
+  const usados = { a:[], b:[], c:[], cs:[] };
 
   Object.keys(mapa).forEach(id=>{
     const inp = document.getElementById(id);
@@ -336,9 +325,7 @@ function verGabarito(){
     <div class="gabarito-item"><strong>publikaĵoj</strong> <span>publicações</span></div>
     <div class="gabarito-item"><strong>periodaĵoj</strong> <span>periódicos</span></div>
 
-    <div class="gabarito-secao">3.4 — Começam com <strong>ĝi</strong> (pronome):</div>
-    <div class="gabarito-item"><strong>ĝin</strong> <span>pronome acusativo — "a ela/o"</span></div>
-    <div class="gabarito-item"><strong>ĝenerale</strong> <span>geralmente</span></div>`;
+    <div class="gabarito-item"><strong>periodaĵoj</strong> <span>periódicos</span></div>`;
 }
 
 function limpar(){
