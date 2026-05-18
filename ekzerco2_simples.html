@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ekzerco 2 – Esperanto</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    background: #f9f9f9;
+    color: #222;
+    margin: 0;
+    padding: 20px;
+  }
+
+  .cabecalho {
+    background: #1a5c3a;
+    color: white;
+    padding: 20px 24px;
+    border-radius: 10px;
+    margin-bottom: 24px;
+  }
+  .cabecalho h1 { margin: 0 0 6px; font-size: 22px; }
+  .cabecalho p  { margin: 0; font-size: 15px; opacity: 0.85; }
+
+  .texto-base {
+    background: white;
+    border-left: 6px solid #1a5c3a;
+    padding: 18px 20px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 28px;
+    line-height: 1.8;
+  }
+  .texto-base h2 {
+    font-size: 16px;
+    color: #1a5c3a;
+    margin: 0 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .esperanto { color: #1a4a7a; font-style: italic; margin-top: 6px; }
+
+  .dica {
+    background: #e8f5ee;
+    border: 1px solid #b2d8c0;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 28px;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+  .dica strong { color: #1a5c3a; }
+
+  .secao {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px 22px;
+    margin-bottom: 20px;
+  }
+  .secao h3 {
+    font-size: 18px;
+    color: #1a5c3a;
+    margin: 0 0 6px;
+  }
+  .secao .subtitulo {
+    font-size: 14px;
+    color: #666;
+    margin: 0 0 16px;
+  }
+
+  .linha {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .linha label {
+    font-size: 16px;
+    color: #444;
+    min-width: 90px;
+  }
+  .linha input {
+    font-size: 17px;
+    padding: 8px 12px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    width: 200px;
+    outline: none;
+  }
+  .linha input:focus { border-color: #1a5c3a; }
+  .linha input.certo  { border-color: #27ae60; background: #f0faf4; }
+  .linha input.errado { border-color: #c0392b; background: #fdf3f2; }
+
+  .feedback {
+    font-size: 15px;
+    font-weight: bold;
+    display: none;
+  }
+  .feedback.ok  { color: #27ae60; display: inline; }
+  .feedback.nao { color: #c0392b; display: inline; }
+
+  .botoes {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+  }
+  .btn {
+    font-size: 17px;
+    font-weight: bold;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .btn-verificar { background: #1a5c3a; color: white; }
+  .btn-gabarito  { background: #f0c040; color: #333; }
+  .btn-limpar    { background: white; color: #1a5c3a; border: 2px solid #1a5c3a; }
+
+  .resultado {
+    display: none;
+    margin-top: 20px;
+    padding: 16px 20px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .aprovado  { background: #e8f8ef; color: #1a6e3a; border: 2px solid #27ae60; }
+  .revisao   { background: #fef9ec; color: #7d5a00; border: 2px solid #f0c040; }
+  .reprovado { background: #fdecea; color: #922b21; border: 2px solid #c0392b; }
+
+  .gabarito {
+    display: none;
+    margin-top: 20px;
+    background: #e8f5ee;
+    border-radius: 8px;
+    padding: 18px 20px;
+    border: 1px solid #b2d8c0;
+  }
+  .gabarito h3 { color: #1a5c3a; margin: 0 0 12px; font-size: 17px; }
+  .gabarito-item {
+    font-size: 16px;
+    margin-bottom: 8px;
+    padding: 6px 10px;
+    background: white;
+    border-radius: 6px;
+    border-left: 4px solid #1a5c3a;
+  }
+  .gabarito-item strong { color: #1a5c3a; font-family: monospace; font-size: 17px; }
+  .gabarito-item span   { font-size: 13px; color: #666; margin-left: 8px; }
+
+  hr { border: none; border-top: 1px dashed #ccc; margin: 20px 0; }
+</style>
+</head>
+<body>
+
+<!-- CABEÇALHO -->
+<div class="cabecalho">
+  <h1>Ekzerco 2 — Aula 05</h1>
+  <p>Escreva as palavras do texto que terminam com cada terminação indicada</p>
+</div>
+
+<!-- TEXTO BASE -->
+<div class="texto-base">
+  <h2>📖 Leia o texto</h2>
+  <p>A FEB fundamenta seu apoio ao Esperanto na premissa de que a língua é um facilitador de diálogos e um redutor de barreiras culturais e sociais.</p>
+  <p class="esperanto">BSF bazigas sian subtenon al Esperanto sur la premiso, ke la lingvo faciligas dialogojn kaj malpliigas kulturajn kaj sociajn barojn.</p>
+
+  <hr>
+
+  <p><strong>Língua de Fraternidade:</strong> A instituição define o Esperanto como um meio de aproximar indivíduos de diferentes países, crenças e culturas, promovendo o entendimento mútuo e a convivência pacífica.</p>
+  <p class="esperanto"><strong>Lingvo de Frateco:</strong> La institucio difinas Esperanton kiel rimedon por proksimigi individuojn el malsamaj landoj, kredoj kaj kulturoj, antaŭenigante reciprokan komprenon kaj pacan kunvivadon.</p>
+
+  <hr>
+
+  <p><strong>Ponte entre Povos:</strong> A língua é vista como recurso que reduz barreiras linguísticas, permitindo que mensagens e estudos circulem globalmente de forma mais acessível.</p>
+  <p class="esperanto"><strong>Ponto inter Popoloj:</strong> La lingvo estas rigardata kiel rimedo, kiu malpliigas lingvajn barojn kaj ebligas, ke mesaĝoj kaj studoj cirkulu tutmonde en pli alirebla maniero.</p>
+
+  <hr>
+
+  <p><strong>Neutralidade:</strong> O caráter neutro da língua destaca-se como fator que reforça os ideais de união, paz e cooperação entre os povos.</p>
+  <p class="esperanto"><strong>Neŭtraleco:</strong> La neŭtrala karaktero de la lingvo elstaras kiel faktoro, kiu fortigas la idealojn de unuiĝo, paco kaj kunlaboro inter la popoloj.</p>
+</div>
+
+<!-- DICA -->
+<div class="dica">
+  💡 <strong>Dica:</strong> Em Esperanto os <strong>adjetivos</strong> terminam sempre em <strong>-a</strong>.
+  O plural acrescenta <strong>-j</strong> → <strong>-aj</strong>.
+  O acusativo acrescenta <strong>-n</strong> → <strong>-an</strong>.
+  Plural + acusativo → <strong>-ajn</strong>.
+</div>
+
+<!-- 2.1 -->
+<div class="secao">
+  <h3>2.1 — Palavras terminadas em <code>-a</code></h3>
+  <div class="subtitulo">Adjetivo singular — exemplo: <em>bona</em> (bom)</div>
+  <div class="linha"><label>Palavra 1:</label><input type="text" id="a1" placeholder="escreva aqui"><span class="feedback" id="fa1"></span></div>
+  <div class="linha"><label>Palavra 2:</label><input type="text" id="a2" placeholder="escreva aqui"><span class="feedback" id="fa2"></span></div>
+  <div class="linha"><label>Palavra 3:</label><input type="text" id="a3" placeholder="escreva aqui"><span class="feedback" id="fa3"></span></div>
+  <div class="linha"><label>Palavra 4:</label><input type="text" id="a4" placeholder="escreva aqui"><span class="feedback" id="fa4"></span></div>
+</div>
+
+<!-- 2.2 -->
+<div class="secao">
+  <h3>2.2 — Palavras terminadas em <code>-aj</code></h3>
+  <div class="subtitulo">Adjetivo plural — exemplo: <em>bonaj</em> (bons)</div>
+  <div class="linha"><label>Palavra 1:</label><input type="text" id="b1" placeholder="escreva aqui"><span class="feedback" id="fb1"></span></div>
+  <div class="linha"><label>Palavra 2:</label><input type="text" id="b2" placeholder="escreva aqui"><span class="feedback" id="fb2"></span></div>
+</div>
+
+<!-- 2.3 -->
+<div class="secao">
+  <h3>2.3 — Palavras terminadas em <code>-an</code></h3>
+  <div class="subtitulo">Adjetivo singular acusativo — exemplo: <em>bonan</em> (um bom)</div>
+  <div class="linha"><label>Palavra 1:</label><input type="text" id="c1" placeholder="escreva aqui"><span class="feedback" id="fc1"></span></div>
+  <div class="linha"><label>Palavra 2:</label><input type="text" id="c2" placeholder="escreva aqui"><span class="feedback" id="fc2"></span></div>
+  <div class="linha"><label>Palavra 3:</label><input type="text" id="c3" placeholder="escreva aqui"><span class="feedback" id="fc3"></span></div>
+</div>
+
+<!-- 2.4 -->
+<div class="secao">
+  <h3>2.4 — Palavras terminadas em <code>-ajn</code></h3>
+  <div class="subtitulo">Adjetivo plural acusativo — exemplo: <em>bonajn</em> (uns bons)</div>
+  <div class="linha"><label>Palavra 1:</label><input type="text" id="d1" placeholder="escreva aqui"><span class="feedback" id="fd1"></span></div>
+  <div class="linha"><label>Palavra 2:</label><input type="text" id="d2" placeholder="escreva aqui"><span class="feedback" id="fd2"></span></div>
+  <div class="linha"><label>Palavra 3:</label><input type="text" id="d3" placeholder="escreva aqui"><span class="feedback" id="fd3"></span></div>
+</div>
+
+<!-- BOTÕES -->
+<div class="botoes">
+  <button class="btn btn-verificar" onclick="verificar()">✔ Verificar</button>
+  <button class="btn btn-gabarito"  onclick="verGabarito()">🔑 Ver gabarito</button>
+  <button class="btn btn-limpar"    onclick="limpar()">↺ Limpar</button>
+</div>
+
+<div class="resultado" id="resultado"></div>
+<div class="gabarito" id="gabarito"></div>
+
+<script>
+const gabarito = {
+  a1: "neŭtrala", a2: "reciproka", a3: "paca", a4: "alirebla",
+  b1: "malsamaj",  b2: "lingvaj",
+  c1: "reciprokan", c2: "pacan", c3: "alireblan",
+  d1: "kulturajn",  d2: "sociajn", d3: "lingvajn"
+};
+
+// Aceita qualquer ordem — verifica se a palavra está no conjunto correto
+const grupos = {
+  a: ["neŭtrala","reciproka","paca","alirebla"],
+  b: ["malsamaj","lingvaj"],
+  c: ["reciprokan","pacan","alireblan","neŭtralan"],
+  d: ["kulturajn","sociajn","lingvajn"]
+};
+
+function norm(s){ return s.trim().toLowerCase(); }
+
+function verificar(){
+  let total=0, acertos=0;
+  ["a","b","c","d"].forEach(g=>{
+    const campos = Object.keys(gabarito).filter(k=>k.startsWith(g));
+    campos.forEach(id=>{
+      const inp = document.getElementById(id);
+      const fb  = document.getElementById("f"+id);
+      if(!inp) return;
+      total++;
+      inp.classList.remove("certo","errado");
+      fb.className = "feedback";
+      fb.textContent = "";
+      if(norm(inp.value) && grupos[g].includes(norm(inp.value))){
+        inp.classList.add("certo");
+        fb.className = "feedback ok";
+        fb.textContent = "✓";
+        acertos++;
+      } else if(inp.value.trim()){
+        inp.classList.add("errado");
+        fb.className = "feedback nao";
+        fb.textContent = "✗";
+      }
+    });
+  });
+
+  const res = document.getElementById("resultado");
+  res.style.display = "block";
+  const pct = Math.round(acertos/total*100);
+  if(pct>=80){
+    res.className="resultado aprovado";
+    res.innerHTML="🎉 Parabéns! Você acertou "+acertos+" de "+total+" — Bonega!";
+  } else if(pct>=50){
+    res.className="resultado revisao";
+    res.innerHTML="🙂 Você acertou "+acertos+" de "+total+". Revise e tente novamente!";
+  } else {
+    res.className="resultado reprovado";
+    res.innerHTML="💪 Você acertou "+acertos+" de "+total+". Releia o texto e tente de novo!";
+  }
+}
+
+function verGabarito(){
+  const g = document.getElementById("gabarito");
+  if(g.style.display==="block"){ g.style.display="none"; return; }
+  g.style.display="block";
+  g.innerHTML = `<h3>🔑 Gabarito</h3>
+    <p style="font-size:15px;color:#555;margin:0 0 10px;">Terminação <strong>-a</strong>:</p>
+    <div class="gabarito-item"><strong>neŭtrala</strong> <span>adjetivo singular</span></div>
+    <div class="gabarito-item"><strong>reciproka</strong> <span>adjetivo singular</span></div>
+    <div class="gabarito-item"><strong>paca</strong> <span>adjetivo singular</span></div>
+    <div class="gabarito-item"><strong>alirebla</strong> <span>adjetivo singular</span></div>
+    <p style="font-size:15px;color:#555;margin:14px 0 10px;">Terminação <strong>-aj</strong>:</p>
+    <div class="gabarito-item"><strong>malsamaj</strong> <span>adjetivo plural</span></div>
+    <div class="gabarito-item"><strong>lingvaj</strong> <span>adjetivo plural</span></div>
+    <p style="font-size:15px;color:#555;margin:14px 0 10px;">Terminação <strong>-an</strong>:</p>
+    <div class="gabarito-item"><strong>reciprokan</strong> <span>adjetivo singular acusativo</span></div>
+    <div class="gabarito-item"><strong>pacan</strong> <span>adjetivo singular acusativo</span></div>
+    <div class="gabarito-item"><strong>alireblan</strong> <span>adjetivo singular acusativo</span></div>
+    <p style="font-size:15px;color:#555;margin:14px 0 10px;">Terminação <strong>-ajn</strong>:</p>
+    <div class="gabarito-item"><strong>kulturajn</strong> <span>adjetivo plural acusativo</span></div>
+    <div class="gabarito-item"><strong>sociajn</strong> <span>adjetivo plural acusativo</span></div>
+    <div class="gabarito-item"><strong>lingvajn</strong> <span>adjetivo plural acusativo</span></div>`;
+}
+
+function limpar(){
+  Object.keys(gabarito).forEach(id=>{
+    const inp=document.getElementById(id);
+    const fb=document.getElementById("f"+id);
+    if(inp){ inp.value=""; inp.classList.remove("certo","errado"); }
+    if(fb){ fb.className="feedback"; fb.textContent=""; }
+  });
+  document.getElementById("resultado").style.display="none";
+  document.getElementById("gabarito").style.display="none";
+}
+</script>
+</body>
+</html>
