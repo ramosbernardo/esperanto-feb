@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercício 4 – Complete o diálogo | Aula 02</title>
+<style>
+  body { font-family: Arial, sans-serif; font-size: 18px; background: #f9f9f9; color: #222; margin: 0; padding: 20px; }
+
+  .cabecalho { background: #1a5c3a; color: white; padding: 20px 24px; border-radius: 10px; margin-bottom: 24px; }
+  .cabecalho h1 { margin: 0 0 6px; font-size: 22px; }
+  .cabecalho p  { margin: 0; font-size: 15px; opacity: 0.85; }
+
+  .instrucao {
+    background: #e8f5ee;
+    border: 1px solid #b2d8c0;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    font-size: 17px;
+    line-height: 1.8;
+  }
+  .instrucao strong { color: #1a5c3a; }
+
+  /* BANCO DE PALAVRAS */
+  .banco {
+    background: white;
+    border-left: 6px solid #f0c040;
+    padding: 16px 20px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 28px;
+  }
+  .banco h2 { font-size: 16px; color: #1a5c3a; margin: 0 0 14px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .banco-palavras { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip {
+    background: #1a5c3a;
+    color: white;
+    border-radius: 20px;
+    padding: 6px 18px;
+    font-size: 17px;
+    font-weight: bold;
+    letter-spacing: 0.02em;
+  }
+
+  /* DIÁLOGO */
+  .secao { background: white; border: 1px solid #ddd; border-radius: 10px; padding: 20px 22px; margin-bottom: 20px; }
+  .secao h3 { font-size: 18px; color: #1a5c3a; margin: 0 0 4px; }
+  .secao .subtitulo { font-size: 15px; color: #555; margin: 0 0 20px; background: #f5fbf7; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #1a5c3a; }
+
+  .dialogo { display: flex; flex-direction: column; gap: 14px; }
+
+  .fala {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 16px;
+    border-radius: 8px;
+    flex-wrap: wrap;
+  }
+  .fala.pessoa-a { background: #f5fbf7; border-left: 4px solid #1a5c3a; }
+  .fala.pessoa-b { background: #fef9ec; border-left: 4px solid #f0c040; }
+
+  .fala-letra {
+    font-size: 18px;
+    font-weight: bold;
+    min-width: 28px;
+    padding-top: 2px;
+  }
+  .pessoa-a .fala-letra { color: #1a5c3a; }
+  .pessoa-b .fala-letra { color: #b07a00; }
+
+  .fala-conteudo {
+    font-size: 18px;
+    color: #1a4a7a;
+    font-weight: bold;
+    line-height: 1.8;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .lacuna {
+    font-size: 17px;
+    padding: 6px 10px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    width: 160px;
+    outline: none;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    color: #222;
+    background: white;
+  }
+  .lacuna.larga  { width: 200px; }
+  .lacuna.curta  { width: 100px; }
+  .lacuna:focus  { border-color: #1a5c3a; }
+  .lacuna.certo  { border-color: #27ae60; background: #f0faf4; }
+  .lacuna.errado { border-color: #c0392b; background: #fdf3f2; }
+
+  .feedback { font-size: 15px; font-weight: bold; display: none; margin-left: 4px; }
+  .feedback.ok  { color: #27ae60; display: inline; }
+  .feedback.nao { color: #c0392b; display: inline; }
+
+  /* BOTÕES */
+  .botoes { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+  .btn { font-size: 17px; font-weight: bold; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; }
+  .btn-verificar { background: #1a5c3a; color: white; }
+  .btn-gabarito  { background: #f0c040; color: #333; }
+  .btn-limpar    { background: white; color: #1a5c3a; border: 2px solid #1a5c3a; }
+
+  .resultado { display: none; margin-top: 20px; padding: 16px 20px; border-radius: 8px; font-size: 18px; font-weight: bold; }
+  .aprovado  { background: #e8f8ef; color: #1a6e3a; border: 2px solid #27ae60; }
+  .revisao   { background: #fef9ec; color: #7d5a00; border: 2px solid #f0c040; }
+  .reprovado { background: #fdecea; color: #922b21; border: 2px solid #c0392b; }
+
+  .gabarito { display: none; margin-top: 20px; background: #e8f5ee; border-radius: 8px; padding: 18px 20px; border: 1px solid #b2d8c0; }
+  .gabarito h3 { color: #1a5c3a; margin: 0 0 14px; font-size: 17px; }
+  .gabarito-fala {
+    font-size: 16px; margin-bottom: 10px; padding: 10px 14px;
+    background: white; border-radius: 6px; border-left: 4px solid #1a5c3a;
+    line-height: 1.7;
+  }
+  .gabarito-fala .gl { font-weight: bold; color: #1a5c3a; margin-right: 8px; }
+  .gabarito-fala strong { color: #1a4a7a; }
+</style>
+</head>
+<body>
+
+<!-- CABEÇALHO -->
+<div class="cabecalho">
+  <h1>Exercício 4 – Complete o diálogo</h1>
+  <p>Aula 02 — Contexto Histórico do Esperanto (Precursores)</p>
+</div>
+
+<!-- INSTRUÇÃO -->
+<div class="instrucao">
+  ✏️ <strong>Exercício 4 – Complete o diálogo:</strong><br>
+  Use as palavras do banco abaixo para preencher os espaços em branco na ordem correta.
+</div>
+
+<!-- BANCO DE PALAVRAS -->
+<div class="banco">
+  <h2>📋 Banco de palavras</h2>
+  <div class="banco-palavras">
+    <span class="chip">Saluton</span>
+    <span class="chip">Esperanton</span>
+    <span class="chip">lingvo</span>
+    <span class="chip">frateco</span>
+    <span class="chip">Saluton</span>
+    <span class="chip">Ĝis revido</span>
+  </div>
+</div>
+
+<!-- EXERCÍCIO -->
+<div class="secao">
+  <h3>✏️ Preencha os espaços</h3>
+  <div class="subtitulo">Escreva a palavra correta do banco em cada lacuna do diálogo.</div>
+
+  <div class="dialogo">
+
+    <!-- A: __________, Paŭlo! -->
+    <div class="fala pessoa-a">
+      <div class="fala-letra">A:</div>
+      <div class="fala-conteudo">
+        <input class="lacuna" type="text" id="d1" data-resp="saluton" placeholder="__________" autocomplete="off" spellcheck="false">
+        <span class="feedback" id="fd1"></span>
+        , Paŭlo!
+      </div>
+    </div>
+
+    <!-- B: _________, Johano! -->
+    <div class="fala pessoa-b">
+      <div class="fala-letra">B:</div>
+      <div class="fala-conteudo">
+        <input class="lacuna" type="text" id="d2" data-resp="saluton" placeholder="_________" autocomplete="off" spellcheck="false">
+        <span class="feedback" id="fd2"></span>
+        , Johano!
+      </div>
+    </div>
+
+    <!-- A: Ĉu vi konas ___________? -->
+    <div class="fala pessoa-a">
+      <div class="fala-letra">A:</div>
+      <div class="fala-conteudo">
+        Ĉu vi konas&nbsp;
+        <input class="lacuna larga" type="text" id="d3" data-resp="esperanton" placeholder="___________" autocomplete="off" spellcheck="false">
+        <span class="feedback" id="fd3"></span>
+        ?
+      </div>
+    </div>
+
+    <!-- B: Jes, Esperanto estas la _____ de la _______ -->
+    <div class="fala pessoa-b">
+      <div class="fala-letra">B:</div>
+      <div class="fala-conteudo">
+        Jes, Esperanto estas la&nbsp;
+        <input class="lacuna curta" type="text" id="d4" data-resp="lingvo" placeholder="_____" autocomplete="off" spellcheck="false">
+        <span class="feedback" id="fd4"></span>
+        &nbsp;de la&nbsp;
+        <input class="lacuna" type="text" id="d5" data-resp="frateco" placeholder="_______" autocomplete="off" spellcheck="false">
+        <span class="feedback" id="fd5"></span>
+      </div>
+    </div>
+
+    <!-- A: __________! -->
+    <div class="fala pessoa-a">
+      <div class="fala-letra">A:</div>
+      <div class="fala-conteudo">
+        <input class="lacuna larga" type="text" id="d6" data-resp="ĝis revido" placeholder="__________" autocomplete="off" spellcheck="false">
+        <span class="feedback" id="fd6"></span>
+        !
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- BOTÕES -->
+<div class="botoes">
+  <button class="btn btn-verificar" onclick="verificar()">✔ Verificar</button>
+  <button class="btn btn-gabarito"  onclick="verGabarito()">🔑 Ver gabarito</button>
+  <button class="btn btn-limpar"    onclick="limpar()">↺ Limpar</button>
+</div>
+
+<div class="resultado" id="resultado"></div>
+<div class="gabarito"  id="gabarito"></div>
+
+<script>
+const ids = ["d1","d2","d3","d4","d5","d6"];
+
+function norm(s) {
+  return s.trim().toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/\^/g, "");
+}
+
+function verificar() {
+  let total = 0, acertos = 0;
+  ids.forEach(id => {
+    const inp = document.getElementById(id);
+    const fb  = document.getElementById("f" + id);
+    if (!inp || !fb || !inp.value.trim()) return;
+    total++;
+    inp.classList.remove("certo", "errado");
+    fb.className = "feedback";
+    fb.textContent = "";
+    const val  = norm(inp.value);
+    const resp = norm(inp.dataset.resp);
+    if (val === resp) {
+      inp.classList.add("certo");
+      fb.className = "feedback ok";
+      fb.textContent = "✓";
+      acertos++;
+    } else {
+      inp.classList.add("errado");
+      fb.className = "feedback nao";
+      fb.textContent = "✗";
+    }
+  });
+
+  if (total === 0) {
+    const res = document.getElementById("resultado");
+    res.style.display = "block";
+    res.className = "resultado revisao";
+    res.innerHTML = "✏️ Preencha pelo menos um campo para verificar!";
+    return;
+  }
+
+  const res = document.getElementById("resultado");
+  res.style.display = "block";
+  const pct = Math.round(acertos / total * 100);
+  if (pct >= 80) {
+    res.className = "resultado aprovado";
+    res.innerHTML = "🎉 Parabéns! Você acertou " + acertos + " de " + total + " — Bonega!";
+  } else if (pct >= 50) {
+    res.className = "resultado revisao";
+    res.innerHTML = "🙂 Você acertou " + acertos + " de " + total + ". Revise e tente novamente!";
+  } else {
+    res.className = "resultado reprovado";
+    res.innerHTML = "💪 Você acertou " + acertos + " de " + total + ". Releia o banco de palavras e tente de novo!";
+  }
+}
+
+function verGabarito() {
+  const g = document.getElementById("gabarito");
+  if (g.style.display === "block") { g.style.display = "none"; return; }
+  g.style.display = "block";
+  g.innerHTML = `<h3>🔑 Gabarito — Diálogo completo</h3>
+    <div class="gabarito-fala"><span class="gl">A:</span> <strong>Saluton</strong>, Paŭlo!</div>
+    <div class="gabarito-fala"><span class="gl">B:</span> <strong>Saluton</strong>, Johano!</div>
+    <div class="gabarito-fala"><span class="gl">A:</span> Ĉu vi konas <strong>Esperanton</strong>?</div>
+    <div class="gabarito-fala"><span class="gl">B:</span> Jes, Esperanto estas la <strong>lingvo</strong> de la <strong>frateco</strong></div>
+    <div class="gabarito-fala"><span class="gl">A:</span> <strong>Ĝis revido</strong>!</div>`;
+}
+
+function limpar() {
+  ids.forEach(id => {
+    const inp = document.getElementById(id);
+    const fb  = document.getElementById("f" + id);
+    if (inp) { inp.value = ""; inp.classList.remove("certo", "errado"); }
+    if (fb)  { fb.className = "feedback"; fb.textContent = ""; }
+  });
+  document.getElementById("resultado").style.display = "none";
+  document.getElementById("gabarito").style.display  = "none";
+}
+</script>
+</body>
+</html>
