@@ -150,11 +150,15 @@
 <!-- 5.4 -->
 <div class="secao">
   <h3>5.4 — Palavras terminadas em <code>-aj</code></h3>
-  <div class="subtitulo">⚠️ Há 4 adjetivos no plural no texto. Quais são?</div>
+  <div class="subtitulo">⚠️ Há 8 adjetivos no plural no texto. Quais são?</div>
   <div class="linha"><label>Adjetivo 1:</label><input type="text" id="g1" placeholder="escreva aqui"><span class="feedback" id="fg1"></span></div>
   <div class="linha"><label>Adjetivo 2:</label><input type="text" id="g2" placeholder="escreva aqui"><span class="feedback" id="fg2"></span></div>
   <div class="linha"><label>Adjetivo 3:</label><input type="text" id="g3" placeholder="escreva aqui"><span class="feedback" id="fg3"></span></div>
   <div class="linha"><label>Adjetivo 4:</label><input type="text" id="g4" placeholder="escreva aqui"><span class="feedback" id="fg4"></span></div>
+  <div class="linha"><label>Adjetivo 5:</label><input type="text" id="g5" placeholder="escreva aqui"><span class="feedback" id="fg5"></span></div>
+  <div class="linha"><label>Adjetivo 6:</label><input type="text" id="g6" placeholder="escreva aqui"><span class="feedback" id="fg6"></span></div>
+  <div class="linha"><label>Adjetivo 7:</label><input type="text" id="g7" placeholder="escreva aqui"><span class="feedback" id="fg7"></span></div>
+  <div class="linha"><label>Adjetivo 8:</label><input type="text" id="g8" placeholder="escreva aqui"><span class="feedback" id="fg8"></span></div>
 </div>
 
 <div class="botoes">
@@ -178,7 +182,7 @@ const grupos = {
   e:  ["frateco","partnerecoj"],
   es: ["fraternidade","parcerias"],
   f:  ["konservas","kongruas"],
-  g:  ["diversaj","esperantistaj","spiritismaj","lokaj","gvidataj"]
+  g:  ["diversaj","esperantistaj","spiritismaj","lokaj","gvidataj","dediĉitaj","ligitaj","kunlaboran"]
 };
 
 const mapa = {
@@ -188,7 +192,7 @@ const mapa = {
   d1:"d", d1s:"ds",
   e1:"e", e1s:"es",
   f1:"f", f2:"f",
-  g1:"g", g2:"g", g3:"g", g4:"g"
+  g1:"g", g2:"g", g3:"g", g4:"g", g5:"g", g6:"g", g7:"g", g8:"g"
 };
 
 function norm(s){ return s.trim().toLowerCase(); }
@@ -255,7 +259,10 @@ function verGabarito(){
     <div class="gabarito-item"><strong>esperantistaj</strong> <span>esperantistas (adj.)</span></div>
     <div class="gabarito-item"><strong>spiritismaj</strong> <span>espíritas (adj.)</span></div>
     <div class="gabarito-item"><strong>lokaj</strong> <span>locais</span></div>
-    <div class="gabarito-item"><strong>gvidataj</strong> <span>conduzidas / guiadas</span></div>`;
+    <div class="gabarito-item"><strong>gvidataj</strong> <span>conduzidas / guiadas</span></div>
+    <div class="gabarito-item"><strong>dediĉitaj</strong> <span>dedicadas</span></div>
+    <div class="gabarito-item"><strong>ligitaj</strong> <span>ligadas</span></div>
+    <div class="gabarito-item"><strong>kunlaboran</strong> <span>de cooperação</span></div>`;
 }
 
 function limpar(){
