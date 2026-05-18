@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercício 3 – As palavras são paroxítonas</title>
+<style>
+  body { font-family: Arial, sans-serif; font-size: 18px; background: #f9f9f9; color: #222; margin: 0; padding: 20px; }
+  .cabecalho { background: #1a5c3a; color: white; padding: 20px 24px; border-radius: 10px; margin-bottom: 24px; }
+  .cabecalho h1 { margin: 0 0 6px; font-size: 22px; }
+  .cabecalho p  { margin: 0; font-size: 15px; opacity: 0.85; }
+
+  .instrucao {
+    background: #e8f5ee;
+    border: 1px solid #b2d8c0;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    font-size: 17px;
+    line-height: 1.8;
+  }
+  .instrucao strong { color: #1a5c3a; }
+
+  /* TABELA DE REFERÊNCIA */
+  .tabela-wrap { margin-bottom: 28px; overflow-x: auto; }
+  table.referencia {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 17px;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  table.referencia th {
+    background: #1a5c3a;
+    color: white;
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 16px;
+  }
+  table.referencia td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #e0f0e8;
+    vertical-align: middle;
+  }
+  table.referencia tr:last-child td { border-bottom: none; }
+  table.referencia tr:nth-child(even) td { background: #f5fbf7; }
+  table.referencia td:first-child { font-weight: bold; color: #1a4a7a; font-size: 20px; }
+  table.referencia td:nth-child(2) { color: #1a5c3a; font-weight: bold; font-size: 19px; }
+  table.referencia td:nth-child(3) { color: #666; font-style: italic; }
+
+  /* EXERCÍCIO */
+  .secao { background: white; border: 1px solid #ddd; border-radius: 10px; padding: 20px 22px; margin-bottom: 20px; }
+  .secao h3 { font-size: 18px; color: #1a5c3a; margin: 0 0 4px; }
+  .secao .subtitulo { font-size: 15px; color: #555; margin: 0 0 20px; background: #f5fbf7; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #1a5c3a; }
+
+  .linha-ex {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+    padding: 10px 14px;
+    background: #f9f9f9;
+    border-radius: 8px;
+  }
+  .linha-ex .palavra { font-size: 20px; font-weight: bold; color: #1a4a7a; min-width: 120px; }
+  .linha-ex .pronuncia { font-size: 17px; color: #1a5c3a; font-weight: bold; min-width: 120px; }
+  .linha-ex label { font-size: 16px; color: #444; }
+  .linha-ex input {
+    font-size: 17px;
+    padding: 8px 12px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    width: 200px;
+    outline: none;
+  }
+  .linha-ex input:focus  { border-color: #1a5c3a; }
+  .linha-ex input.certo  { border-color: #27ae60; background: #f0faf4; }
+  .linha-ex input.errado { border-color: #c0392b; background: #fdf3f2; }
+
+  .feedback { font-size: 15px; font-weight: bold; display: none; }
+  .feedback.ok  { color: #27ae60; display: inline; }
+  .feedback.nao { color: #c0392b; display: inline; }
+
+  .botoes { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+  .btn { font-size: 17px; font-weight: bold; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; }
+  .btn-verificar { background: #1a5c3a; color: white; }
+  .btn-gabarito  { background: #f0c040; color: #333; }
+  .btn-limpar    { background: white; color: #1a5c3a; border: 2px solid #1a5c3a; }
+
+  .resultado { display: none; margin-top: 20px; padding: 16px 20px; border-radius: 8px; font-size: 18px; font-weight: bold; }
+  .aprovado  { background: #e8f8ef; color: #1a6e3a; border: 2px solid #27ae60; }
+  .revisao   { background: #fef9ec; color: #7d5a00; border: 2px solid #f0c040; }
+  .reprovado { background: #fdecea; color: #922b21; border: 2px solid #c0392b; }
+
+  .gabarito { display: none; margin-top: 20px; background: #e8f5ee; border-radius: 8px; padding: 18px 20px; border: 1px solid #b2d8c0; }
+  .gabarito h3 { color: #1a5c3a; margin: 0 0 12px; font-size: 17px; }
+  .gabarito-item {
+    font-size: 16px; margin-bottom: 8px; padding: 10px 14px;
+    background: white; border-radius: 6px; border-left: 4px solid #1a5c3a;
+    display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+  }
+  .gabarito-item .g-palavra { font-weight: bold; color: #1a4a7a; font-size: 18px; min-width: 100px; }
+  .gabarito-item .g-pron   { color: #1a5c3a; font-weight: bold; min-width: 110px; }
+  .gabarito-item .g-trad   { color: #666; font-style: italic; font-size: 15px; }
+</style>
+</head>
+<body>
+
+<div class="cabecalho">
+  <h1>Exercício 3 – As palavras são paroxítonas</h1>
+  <p>Aula 01 — (Acento tônico na penúltima sílaba)</p>
+</div>
+
+<div class="instrucao">
+  🔊 <strong>(Acento tônico na penúltima sílaba)</strong><br>
+  Leia cada palavra prestando atenção na sílaba destacada.
+</div>
+
+<!-- TABELA DE REFERÊNCIA -->
+<div class="tabela-wrap">
+  <table class="referencia">
+    <tr>
+      <th>Palavras</th>
+      <th>Pronunciar</th>
+      <th>Tradução</th>
+    </tr>
+    <tr><td>Salo</td><td>Sá-lo</td><td>Sal</td></tr>
+    <tr><td>Zebro</td><td>Zê-bro</td><td>Zebra</td></tr>
+    <tr><td>Ĉaro</td><td>Tchá-ro</td><td>Biga, carroça</td></tr>
+    <tr><td>Ŝipo</td><td>Chí-po</td><td>Navio</td></tr>
+    <tr><td>Ĝardeno</td><td>Djar-dê-no</td><td>Jardim</td></tr>
+    <tr><td>Jaro</td><td>Iá-ro</td><td>Ano</td></tr>
+  </table>
+</div>
+
+<!-- EXERCÍCIO 1 — Escrever a pronúncia -->
+<div class="secao">
+  <h3>✏️ Parte 1 — Escreva como se pronuncia</h3>
+  <div class="subtitulo">Olhe a palavra e escreva a pronúncia correta com as sílabas separadas.</div>
+
+  <div class="linha-ex">
+    <div class="palavra">Salo</div>
+    <label>Pronunciar:</label>
+    <input type="text" id="p1" placeholder="ex: Sá-lo">
+    <span class="feedback" id="fp1"></span>
+  </div>
+  <div class="linha-ex">
+    <div class="palavra">Zebro</div>
+    <label>Pronunciar:</label>
+    <input type="text" id="p2" placeholder="ex: Sá-lo">
+    <span class="feedback" id="fp2"></span>
+  </div>
+  <div class="linha-ex">
+    <div class="palavra">Ĉaro</div>
+    <label>Pronunciar:</label>
+    <input type="text" id="p3" placeholder="ex: Sá-lo">
+    <span class="feedback" id="fp3"></span>
+  </div>
+  <div class="linha-ex">
+    <div class="palavra">Ŝipo</div>
+    <label>Pronunciar:</label>
+    <input type="text" id="p4" placeholder="ex: Sá-lo">
+    <span class="feedback" id="fp4"></span>
+  </div>
+  <div class="linha-ex">
+    <div class="palavra">Ĝardeno</div>
+    <label>Pronunciar:</label>
+    <input type="text" id="p5" placeholder="ex: Sá-lo">
+    <span class="feedback" id="fp5"></span>
+  </div>
+  <div class="linha-ex">
+    <div class="palavra">Jaro</div>
+    <label>Pronunciar:</label>
+    <input type="text" id="p6" placeholder="ex: Sá-lo">
+    <span class="feedback" id="fp6"></span>
+  </div>
+</div>
+
+<!-- EXERCÍCIO 2 — Escrever a tradução -->
+<div class="secao">
+  <h3>✏️ Parte 2 — Escreva a tradução em português</h3>
+  <div class="subtitulo">Olhe a palavra e escreva seu significado em português.</div>
+
+  <div class="linha-ex">
+    <div class="palavra">Salo</div>
+    <label>Tradução:</label>
+    <input type="text" id="t1" placeholder="em português">
+    <span class="feedback" id="ft1"></span>
+  </div>
+  <div class="linha-ex">
+    <div class="palavra">Zebro</div>
+    <label>Tradução:</label>
+    <input type="text" id="t2" placeholder="em português">
+    <span class="feedback" id="ft2"></span>
+  </div>
+  <div class="linha-ex">
+    <div class="palavra">Ĉaro</div>
+    <label>Tradução:</label>
+    <input type="text" id="t3" placeholder="em português">
+    <span class="feedback" id="ft3"></span>
+  </div>
+  <div class="linha-ex">
+    <div class="palavra">Ŝipo</div>
+    <label>Tradução:</label>
+    <input type="text" id="t4" placeholder="em português">
+    <span class="feedback" id="ft4"></span>
+  </div>
+  <div class="linha-ex">
+    <div class="palavra">Ĝardeno</div>
+    <label>Tradução:</label>
+    <input type="text" id="t5" placeholder="em português">
+    <span class="feedback" id="ft5"></span>
+  </div>
+  <div class="linha-ex">
+    <div class="palavra">Jaro</div>
+    <label>Tradução:</label>
+    <input type="text" id="t6" placeholder="em português">
+    <span class="feedback" id="ft6"></span>
+  </div>
+</div>
+
+<div class="botoes">
+  <button class="btn btn-verificar" onclick="verificar()">✔ Verificar</button>
+  <button class="btn btn-gabarito"  onclick="verGabarito()">🔑 Ver gabarito</button>
+  <button class="btn btn-limpar"    onclick="limpar()">↺ Limpar</button>
+</div>
+
+<div class="resultado" id="resultado"></div>
+<div class="gabarito"  id="gabarito"></div>
+
+<script>
+const pronuncias = {
+  p1: ["sá-lo","sa-lo"],
+  p2: ["zê-bro","ze-bro"],
+  p3: ["tchá-ro","tcha-ro"],
+  p4: ["chí-po","chi-po"],
+  p5: ["djar-dê-no","djar-de-no"],
+  p6: ["iá-ro","ia-ro"]
+};
+
+const traducoes = {
+  t1: ["sal"],
+  t2: ["zebra"],
+  t3: ["biga","carroça","carroca","biga, carroça"],
+  t4: ["navio"],
+  t5: ["jardim"],
+  t6: ["ano"]
+};
+
+const todas = {...pronuncias, ...traducoes};
+
+function norm(s){
+  return s.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+}
+
+function verificar(){
+  let total=0, acertos=0;
+  Object.keys(todas).forEach(id=>{
+    const inp = document.getElementById(id);
+    const fb  = document.getElementById("f"+id);
+    if(!inp || !fb || !inp.value.trim()) return;
+    total++;
+    inp.classList.remove("certo","errado");
+    fb.className = "feedback"; fb.textContent = "";
+    const val = norm(inp.value);
+    if(todas[id].some(r => norm(r) === val || val.includes(norm(r)) || norm(r).includes(val))){
+      inp.classList.add("certo"); fb.className="feedback ok"; fb.textContent="✓"; acertos++;
+    } else {
+      inp.classList.add("errado"); fb.className="feedback nao"; fb.textContent="✗";
+    }
+  });
+  if(total===0){
+    const res=document.getElementById("resultado");
+    res.style.display="block"; res.className="resultado revisao";
+    res.innerHTML="✏️ Preencha pelo menos um campo para verificar!"; return;
+  }
+  const res = document.getElementById("resultado");
+  res.style.display = "block";
+  const pct = Math.round(acertos/total*100);
+  if(pct>=80){ res.className="resultado aprovado"; res.innerHTML="🎉 Parabéns! Você acertou "+acertos+" de "+total+" — Bonega!"; }
+  else if(pct>=50){ res.className="resultado revisao"; res.innerHTML="🙂 Você acertou "+acertos+" de "+total+". Revise e tente novamente!"; }
+  else { res.className="resultado reprovado"; res.innerHTML="💪 Você acertou "+acertos+" de "+total+". Releia a tabela e tente de novo!"; }
+}
+
+function verGabarito(){
+  const g = document.getElementById("gabarito");
+  if(g.style.display==="block"){ g.style.display="none"; return; }
+  g.style.display="block";
+  g.innerHTML = `<h3>🔑 Gabarito</h3>
+    <div class="gabarito-item">
+      <div class="g-palavra">Salo</div>
+      <div class="g-pron">Sá-lo</div>
+      <div class="g-trad">Sal</div>
+    </div>
+    <div class="gabarito-item">
+      <div class="g-palavra">Zebro</div>
+      <div class="g-pron">Zê-bro</div>
+      <div class="g-trad">Zebra</div>
+    </div>
+    <div class="gabarito-item">
+      <div class="g-palavra">Ĉaro</div>
+      <div class="g-pron">Tchá-ro</div>
+      <div class="g-trad">Biga, carroça</div>
+    </div>
+    <div class="gabarito-item">
+      <div class="g-palavra">Ŝipo</div>
+      <div class="g-pron">Chí-po</div>
+      <div class="g-trad">Navio</div>
+    </div>
+    <div class="gabarito-item">
+      <div class="g-palavra">Ĝardeno</div>
+      <div class="g-pron">Djar-dê-no</div>
+      <div class="g-trad">Jardim</div>
+    </div>
+    <div class="gabarito-item">
+      <div class="g-palavra">Jaro</div>
+      <div class="g-pron">Iá-ro</div>
+      <div class="g-trad">Ano</div>
+    </div>`;
+}
+
+function limpar(){
+  Object.keys(todas).forEach(id=>{
+    const inp=document.getElementById(id);
+    const fb=document.getElementById("f"+id);
+    if(inp){ inp.value=""; inp.classList.remove("certo","errado"); }
+    if(fb){ fb.className="feedback"; fb.textContent=""; }
+  });
+  document.getElementById("resultado").style.display="none";
+  document.getElementById("gabarito").style.display="none";
+}
+</script>
+</body>
+</html>
