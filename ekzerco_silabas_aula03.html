@@ -237,16 +237,16 @@ const texto2Raw = `Evangelio, Spiritismo kaj Esperanto laboras kune. Ili helpas 
 La Evangelio estas la instruoj de Jesuo. Ĝi instruas Amon, Karitaton, Fratecon, kaj montras kiel vivi bone.`;
 
 // ─── GABARITOS ──────────────────────────────────────────────────────────────
-// Palavras de 1 sílaba (1 vogal): la, kaj, pri, kiu, kun, ne, de, el, ke, se, al, sur, mem, ĝi, pli, tri, sed, unu, kiel, vivi (vi-vi tem 2), kune(ku-ne 2)
-// Vogais: a e i o u (ŭ conta como u)
-// 1 sílaba = exatamente 1 vogal no radical sem pontuação
+// 1 sílaba = exatamente 1 vogal. Verificadas contra os textos originais.
+// Removidos: kiu(2), iu(2), ĉiu(2), kiel(2), tri/sed/pli (não nos textos 1A/1B). Adicionado: por.
 const gabarito1 = new Set([
-  "la","kaj","pri","kiu","kun","ne","de","el","ke","se","al","sur","mem","ĝi","pli","tri","sed","ĉar","ĉiu","iu","kiel"
+  "la","kaj","pri","kun","ne","de","el","ke","se","al","sur","mem","por","ĝi"
 ]);
 
-// 2 sílabas = exatamente 2 vogais
+// 2 sílabas = exatamente 2 vogais. Verificadas contra o texto 2.
+// Removidos: afero(3), instruoj(3), jesuo(3), laboras(3). Adicionados: unu, sola, vivi, ili.
 const gabarito2 = new Set([
-  "helpas","bonan","fratan","mondon","afero","partoj","sama","celo","estas","instruoj","jesuo","amon","montras","kiel","kune","laboras","bone"
+  "helpas","bonan","fratan","mondon","partoj","sama","celo","estas","amon","montras","kiel","kune","bone","unu","sola","vivi","ili"
 ]);
 
 // ─── ESTADO ─────────────────────────────────────────────────────────────────
