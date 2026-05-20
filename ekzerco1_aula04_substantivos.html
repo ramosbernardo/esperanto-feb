@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercício 1 – Aula 04 – Substantivos e Adjetivos</title>
+<style>
+  body { font-family: Arial, sans-serif; font-size: 18px; background: #f9f9f9; color: #222; margin: 0; padding: 20px; }
+
+  .cabecalho { background: #1a5c3a; color: white; padding: 20px 24px; border-radius: 10px; margin-bottom: 24px; }
+  .cabecalho h1 { margin: 0 0 6px; font-size: 22px; }
+  .cabecalho p  { margin: 0; font-size: 15px; opacity: 0.85; }
+
+  .instrucao {
+    background: #e8f5ee;
+    border: 1px solid #b2d8c0;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 28px;
+    font-size: 17px;
+    line-height: 1.8;
+  }
+  .instrucao strong { color: #1a5c3a; }
+
+  /* REGRA */
+  .regra {
+    background: #fef9ec;
+    border: 1px solid #f0c040;
+    border-left: 6px solid #f0c040;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 28px;
+    font-size: 16px;
+    line-height: 1.9;
+  }
+  .regra strong { color: #7d5a00; }
+
+  /* TEXTO BASE */
+  .texto-base {
+    background: white;
+    border-left: 6px solid #1a5c3a;
+    padding: 18px 20px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 20px;
+    line-height: 2;
+    font-size: 17px;
+    font-style: italic;
+    color: #1a4a7a;
+  }
+  .texto-base h2 { font-size: 15px; color: #1a5c3a; margin: 0 0 12px; text-transform: uppercase; letter-spacing: 0.05em; font-style: normal; }
+
+  /* PALAVRA CLICÁVEL */
+  .palavra {
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 1px 4px;
+    margin: 1px;
+    transition: background 0.15s, color 0.15s;
+    user-select: none;
+    font-style: italic;
+  }
+  .palavra:hover { background: #d4edda; }
+
+  /* ESTADOS — parte A (português) */
+  .palavra.subst-s   { background: #1a5c3a; color: white; border-radius: 4px; }
+  .palavra.subst-p   { background: #2d8c5e; color: white; border-radius: 4px; }
+
+  /* ESTADOS — parte B (esperanto) */
+  .palavra.subs-eo-s  { background: #1a5c3a; color: white; border-radius: 4px; }
+  .palavra.subs-eo-p  { background: #2d8c5e; color: white; border-radius: 4px; }
+  .palavra.adj-eo-s   { background: #b07a00; color: white; border-radius: 4px; }
+  .palavra.adj-eo-p   { background: #f0c040; color: #333; border-radius: 4px; }
+
+  /* ESTADOS após verificação */
+  .palavra.correta { outline: 3px solid #27ae60; }
+  .palavra.errada  { outline: 3px solid #c0392b; }
+  .palavra.perdida { opacity: 0.6; outline: 2px dashed #f0c040; }
+
+  /* PONT não clicável */
+  .pont { color: #333; font-style: italic; }
+
+  /* LEGENDA */
+  .legenda {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 16px;
+    font-size: 15px;
+  }
+  .leg-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .leg-cor {
+    width: 20px; height: 20px;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+
+  /* SEÇÃO */
+  .secao { background: white; border: 1px solid #ddd; border-radius: 10px; padding: 20px 22px; margin-bottom: 24px; }
+  .secao h3 { font-size: 18px; color: #1a5c3a; margin: 0 0 4px; }
+  .secao .subtitulo { font-size: 15px; color: #555; margin: 0 0 16px; background: #f5fbf7; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #1a5c3a; }
+
+  /* CONTADOR */
+  .contadores {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .contador {
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+    padding: 5px 12px;
+    border-radius: 20px;
+    display: inline-block;
+  }
+  .cnt-ss { background: #1a5c3a; }
+  .cnt-sp { background: #2d8c5e; }
+  .cnt-as { background: #b07a00; }
+  .cnt-ap { background: #f0c040; color: #333; }
+
+  /* LISTA DE SELECIONADAS */
+  .lista-marcadas {
+    min-height: 40px;
+    background: #f9f9f9;
+    border: 1px dashed #ccc;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+  .lista-marcadas .placeholder { color: #aaa; font-size: 14px; font-style: italic; }
+  .tag {
+    border-radius: 20px;
+    padding: 3px 12px;
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+  }
+  .tag.ss { background: #1a5c3a; }
+  .tag.sp { background: #2d8c5e; }
+  .tag.eos { background: #1a5c3a; }
+  .tag.eop { background: #2d8c5e; }
+  .tag.eas { background: #b07a00; }
+  .tag.eap { background: #f0c040; color: #333; }
+
+  /* BOTÕES */
+  .botoes { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+  .btn { font-size: 17px; font-weight: bold; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; }
+  .btn-verificar { background: #1a5c3a; color: white; }
+  .btn-gabarito  { background: #f0c040; color: #333; }
+  .btn-limpar    { background: white; color: #1a5c3a; border: 2px solid #1a5c3a; }
+
+  /* RESULTADO */
+  .resultado { display: none; margin-top: 20px; padding: 16px 20px; border-radius: 8px; font-size: 18px; font-weight: bold; }
+  .aprovado  { background: #e8f8ef; color: #1a6e3a; border: 2px solid #27ae60; }
+  .revisao   { background: #fef9ec; color: #7d5a00; border: 2px solid #f0c040; }
+  .reprovado { background: #fdecea; color: #922b21; border: 2px solid #c0392b; }
+
+  /* GABARITO */
+  .gabarito { display: none; margin-top: 20px; background: #e8f5ee; border-radius: 8px; padding: 18px 20px; border: 1px solid #b2d8c0; }
+  .gabarito h3 { color: #1a5c3a; margin: 0 0 12px; font-size: 17px; }
+  .gabarito-secao { font-size: 15px; color: #555; margin: 12px 0 8px; font-weight: bold; }
+  .gabarito-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 6px; }
+  .g-chip {
+    border-radius: 20px; padding: 4px 14px;
+    font-size: 15px; font-weight: bold; color: white;
+  }
+  .g-ss { background: #1a5c3a; }
+  .g-sp { background: #2d8c5e; }
+  .g-eos { background: #1a5c3a; }
+  .g-eop { background: #2d8c5e; }
+  .g-eas { background: #b07a00; }
+  .g-eap { background: #f0c040; color: #333; }
+  .gabarito-nota { font-size: 14px; color: #555; font-style: italic; padding: 8px 12px; background: white; border-radius: 6px; border-left: 3px solid #f0c040; margin-top: 8px; }
+</style>
+</head>
+<body>
+
+<!-- CABEÇALHO -->
+<div class="cabecalho">
+  <h1>Exercício 1 – Substantivos e Adjetivos</h1>
+  <p>Aula 04 — Mensagens Encorajadoras sobre os 3 Es</p>
+</div>
+
+<!-- INSTRUÇÃO -->
+<div class="instrucao">
+  ✏️ <strong>Exercício 1</strong><br><br>
+  <strong>a.</strong> Encontre, no texto abaixo, em português, os substantivos no <strong>singular</strong> e no <strong>plural</strong>.<br><br>
+  <strong>b.</strong> Você já aprendeu que os substantivos, em Esperanto, terminam sempre com a letra <strong>O</strong>, e os adjetivos com a letra <strong>A</strong>. Então, marque-os agora no texto em Esperanto, no <strong>singular</strong> e no <strong>plural</strong>.
+</div>
+
+<!-- REGRA / LEGENDA -->
+<div class="regra">
+  💡 <strong>Como usar:</strong> Clique nas palavras do texto para marcá-las. Cada clique alterna a categoria:<br>
+  <br>
+  <strong>Parte a — Português:</strong><br>
+  &nbsp;&nbsp;1º clique = <span style="background:#1a5c3a;color:white;padding:1px 8px;border-radius:4px;">Substantivo singular</span>&nbsp;
+  &nbsp;&nbsp;2º clique = <span style="background:#2d8c5e;color:white;padding:1px 8px;border-radius:4px;">Substantivo plural</span>&nbsp;
+  &nbsp;&nbsp;3º clique = sem marcação<br><br>
+  <strong>Parte b — Esperanto:</strong><br>
+  &nbsp;&nbsp;1º clique = <span style="background:#1a5c3a;color:white;padding:1px 8px;border-radius:4px;">Substantivo singular</span>&nbsp;
+  &nbsp;&nbsp;2º clique = <span style="background:#2d8c5e;color:white;padding:1px 8px;border-radius:4px;">Substantivo plural</span>&nbsp;
+  &nbsp;&nbsp;3º clique = <span style="background:#b07a00;color:white;padding:1px 8px;border-radius:4px;">Adjetivo singular</span>&nbsp;
+  &nbsp;&nbsp;4º clique = <span style="background:#f0c040;color:#333;padding:1px 8px;border-radius:4px;">Adjetivo plural</span>&nbsp;
+  &nbsp;&nbsp;5º clique = sem marcação
+</div>
+
+<!-- ══════════════════════════════════
+     PARTE A — PORTUGUÊS
+     ══════════════════════════════════ -->
+<div class="secao">
+  <h3>a. Texto em português — marque os substantivos</h3>
+  <div class="subtitulo">Clique nas palavras que são <strong>substantivos</strong>. 1º clique = singular · 2º clique = plural · 3º clique = remove.</div>
+
+  <div class="contadores">
+    <span class="contador cnt-ss" id="cntA-ss">Singular: 0</span>
+    <span class="contador cnt-sp" id="cntA-sp">Plural: 0</span>
+  </div>
+
+  <div class="texto-base">
+    <h2>📖 Texto em Português</h2>
+    <div id="textoA"></div>
+  </div>
+
+  <div style="font-size:14px;color:#555;margin-top:8px;">Palavras marcadas:</div>
+  <div class="lista-marcadas" id="listaA">
+    <span class="placeholder">Nenhuma palavra marcada ainda...</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PARTE B — ESPERANTO
+     ══════════════════════════════════ -->
+<div class="secao">
+  <h3>b. Texto em Esperanto — marque substantivos e adjetivos</h3>
+  <div class="subtitulo">Clique nas palavras. 1º = subst. singular · 2º = subst. plural · 3º = adj. singular · 4º = adj. plural · 5º = remove.</div>
+
+  <div class="contadores">
+    <span class="contador cnt-ss" id="cntB-ss">Subst. singular: 0</span>
+    <span class="contador cnt-sp" id="cntB-sp">Subst. plural: 0</span>
+    <span class="contador cnt-as" id="cntB-as">Adj. singular: 0</span>
+    <span class="contador cnt-ap" id="cntB-ap">Adj. plural: 0</span>
+  </div>
+
+  <div class="texto-base">
+    <h2>📖 Texto em Esperanto</h2>
+    <div id="textoB"></div>
+  </div>
+
+  <div style="font-size:14px;color:#555;margin-top:8px;">Palavras marcadas:</div>
+  <div class="lista-marcadas" id="listaB">
+    <span class="placeholder">Nenhuma palavra marcada ainda...</span>
+  </div>
+</div>
+
+<!-- BOTÕES -->
+<div class="botoes">
+  <button class="btn btn-verificar" onclick="verificar()">✔ Verificar</button>
+  <button class="btn btn-gabarito"  onclick="verGabarito()">🔑 Ver gabarito</button>
+  <button class="btn btn-limpar"    onclick="limpar()">↺ Limpar</button>
+</div>
+
+<div class="resultado" id="resultado"></div>
+<div class="gabarito"  id="gabarito"></div>
+
+<script>
+// ─── TEXTOS ORIGINAIS ──────────────────────────────────────────────
+const textoAPT = `"...e com o Espiritismo descerraremos novos horizontes à visão geral para que entendimento sadio prevaleça na mentalidade terrestre, em todas as fases evolutivas, inclinando as criaturas à dignidade humana e ao conhecimento substancial da justiça que determina seja concedido a cada um de acordo com as suas obras."`;
+
+const textoBEO = `"kaj per Spiritismo ni malkaŝos novajn horizontojn al la ĝenerala vidado, por ke sana kompreno superregu en la tera menso, en ĉiuj evoluaj fazoj, klinante la kreitojn al la homa digno kaj al la esenca kono de la justeco, kiu determinas, ke estu donita al ĉiu laŭ liaj faroj."`;
+
+// ─── GABARITOS ─────────────────────────────────────────────────────
+// Parte A — substantivos em português (singular / plural)
+const gabA_s = new Set(["espiritismo","visão","entendimento","mentalidade","dignidade","conhecimento","justiça"]);
+const gabA_p = new Set(["horizontes","fases","criaturas","obras"]);
+
+// Parte B — Esperanto
+// Substantivos singular (terminam -o, não -oj/-ojn): vidado, kompreno, menso, digno, kono, justeco
+const gabB_ss = new Set(["spiritismo","vidado","kompreno","menso","digno","kono","justeco"]);
+// Substantivos plural (terminam -oj/-ojn): horizontojn→horizontoj, fazoj, kreitojn→kreitoj, faroj
+const gabB_sp = new Set(["horizontojn","fazoj","kreitojn","faroj"]);
+// Adjetivos singular (-a): ĝenerala, sana, tera, homa, esenca, donita
+const gabB_as = new Set(["ĝenerala","sana","tera","homa","esenca","donita"]);
+// Adjetivos plural (-aj/-ajn): novajn→novaj, evoluaj
+const gabB_ap = new Set(["novajn","evoluaj"]);
+
+// ─── ESTADO ────────────────────────────────────────────────────────
+// Para parte A: estado por palavra-id: null | 'ss' | 'sp'
+const estadoA = {};
+// Para parte B: estado: null | 'eos' | 'eop' | 'eas' | 'eap'
+const estadoB = {};
+
+// ─── RENDER ────────────────────────────────────────────────────────
+function limparPalavra(w) {
+  return w.replace(/[^a-zA-ZĉĝĥĵŝŭĈĜĤĴŜŬŭàáâãäåèéêëìíîïòóôõöùúûüñç]/gi,"").toLowerCase();
+}
+
+function renderTexto(containerId, raw, parte) {
+  const container = document.getElementById(containerId);
+  const tokens = raw.split(/(\s+)/);
+  let html = ""; let idx = 0;
+  tokens.forEach(token => {
+    if (/^\s+$/.test(token)) { html += token; return; }
+    const match = token.match(/^(["""'«»"()\[\]…—–-]*)([a-zA-ZĉĝĥĵŝŭĈĜĤĴŜŬŭàáâãäåèéêëìíîïòóôõöùúûüñç'-]+)([.,;:!?"""'»)\]…—–]*)$/i);
+    if (match) {
+      const pre = match[1], word = match[2], post = match[3];
+      const id = parte + "_" + idx++;
+      const wl = limparPalavra(word);
+      if (parte === "A") estadoA[id] = null;
+      else               estadoB[id] = null;
+      html += (pre ? `<span class="pont">${pre}</span>` : "");
+      html += `<span class="palavra" id="${id}" data-word="${wl}" data-parte="${parte}" onclick="togglePalavra(this)">${word}</span>`;
+      html += (post ? `<span class="pont">${post}</span>` : "");
+    } else {
+      html += `<span class="pont">${token}</span>`;
+    }
+  });
+  container.innerHTML = html;
+}
+
+// ─── TOGGLE ────────────────────────────────────────────────────────
+const cicloA = [null, 'ss', 'sp'];
+const cicloB = [null, 'eos', 'eop', 'eas', 'eap'];
+
+const classePorEstado = {
+  ss: 'subst-s', sp: 'subst-p',
+  eos: 'subs-eo-s', eop: 'subs-eo-p',
+  eas: 'adj-eo-s',  eap: 'adj-eo-p'
+};
+
+function togglePalavra(el) {
+  const parte = el.dataset.parte;
+  const id = el.id;
+  const ciclo = parte === 'A' ? cicloA : cicloB;
+  const estado = parte === 'A' ? estadoA : estadoB;
+
+  const atual = estado[id];
+  const idx = ciclo.indexOf(atual);
+  const prox = ciclo[(idx + 1) % ciclo.length];
+  estado[id] = prox;
+
+  // Limpa todas as classes de estado
+  el.classList.remove('subst-s','subst-p','subs-eo-s','subs-eo-p','adj-eo-s','adj-eo-p','correta','errada','perdida');
+  if (prox && classePorEstado[prox]) el.classList.add(classePorEstado[prox]);
+
+  atualizarContadores(parte);
+  atualizarLista(parte);
+}
+
+function atualizarContadores(parte) {
+  if (parte === 'A') {
+    const ss = Object.values(estadoA).filter(v=>v==='ss').length;
+    const sp = Object.values(estadoA).filter(v=>v==='sp').length;
+    document.getElementById('cntA-ss').textContent = `Singular: ${ss}`;
+    document.getElementById('cntA-sp').textContent = `Plural: ${sp}`;
+  } else {
+    const eos = Object.values(estadoB).filter(v=>v==='eos').length;
+    const eop = Object.values(estadoB).filter(v=>v==='eop').length;
+    const eas = Object.values(estadoB).filter(v=>v==='eas').length;
+    const eap = Object.values(estadoB).filter(v=>v==='eap').length;
+    document.getElementById('cntB-ss').textContent = `Subst. singular: ${eos}`;
+    document.getElementById('cntB-sp').textContent = `Subst. plural: ${eop}`;
+    document.getElementById('cntB-as').textContent = `Adj. singular: ${eas}`;
+    document.getElementById('cntB-ap').textContent = `Adj. plural: ${eap}`;
+  }
+}
+
+function atualizarLista(parte) {
+  const listaId = parte === 'A' ? 'listaA' : 'listaB';
+  const lista = document.getElementById(listaId);
+  const estado = parte === 'A' ? estadoA : estadoB;
+  const marcadas = Object.entries(estado).filter(([,v])=>v!==null);
+  if (marcadas.length === 0) {
+    lista.innerHTML = '<span class="placeholder">Nenhuma palavra marcada ainda...</span>'; return;
+  }
+  const tagClass = { ss:'ss', sp:'sp', eos:'eos', eop:'eop', eas:'eas', eap:'eap' };
+  let html = '';
+  marcadas.forEach(([id, est]) => {
+    const el = document.getElementById(id);
+    if (el) html += `<span class="tag ${tagClass[est]}">${el.textContent}</span>`;
+  });
+  lista.innerHTML = html;
+}
+
+// ─── VERIFICAR ─────────────────────────────────────────────────────
+function verificar() {
+  let acertos = 0, erros = 0, perdidas = 0;
+
+  // Parte A
+  Object.entries(estadoA).forEach(([id, est]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const w = el.dataset.word;
+    el.classList.remove('correta','errada','perdida');
+    if (est === null) return;
+    const correto = (est === 'ss' && gabA_s.has(w)) || (est === 'sp' && gabA_p.has(w));
+    if (correto) { el.classList.add('correta'); acertos++; }
+    else         { el.classList.add('errada');  erros++;   }
+  });
+  // Perdidas parte A
+  document.querySelectorAll('[data-parte="A"]').forEach(el => {
+    const w = el.dataset.word;
+    if (!el.classList.contains('correta') && !el.classList.contains('errada')) {
+      if (gabA_s.has(w) || gabA_p.has(w)) { el.classList.add('perdida'); perdidas++; }
+    }
+  });
+
+  // Parte B
+  Object.entries(estadoB).forEach(([id, est]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const w = el.dataset.word;
+    el.classList.remove('correta','errada','perdida');
+    if (est === null) return;
+    const correto =
+      (est === 'eos' && gabB_ss.has(w)) ||
+      (est === 'eop' && gabB_sp.has(w)) ||
+      (est === 'eas' && gabB_as.has(w)) ||
+      (est === 'eap' && gabB_ap.has(w));
+    if (correto) { el.classList.add('correta'); acertos++; }
+    else         { el.classList.add('errada');  erros++;   }
+  });
+  // Perdidas parte B
+  document.querySelectorAll('[data-parte="B"]').forEach(el => {
+    const w = el.dataset.word;
+    if (!el.classList.contains('correta') && !el.classList.contains('errada')) {
+      if (gabB_ss.has(w)||gabB_sp.has(w)||gabB_as.has(w)||gabB_ap.has(w)) { el.classList.add('perdida'); perdidas++; }
+    }
+  });
+
+  const total = acertos + erros;
+  const res = document.getElementById('resultado');
+  res.style.display = 'block';
+  if (total === 0) {
+    res.className = 'resultado revisao';
+    res.innerHTML = '✏️ Clique nas palavras dos textos para marcá-las antes de verificar!'; return;
+  }
+  const pct = Math.round(acertos / total * 100);
+  const perdMsg = perdidas > 0 ? ` Palavras com <u>tracejado amarelo</u> são corretas não marcadas.` : '';
+  if (pct >= 80) {
+    res.className = 'resultado aprovado';
+    res.innerHTML = `🎉 Parabéns! Você acertou ${acertos} de ${total} marcadas — Bonega!${perdMsg}`;
+  } else if (pct >= 50) {
+    res.className = 'resultado revisao';
+    res.innerHTML = `🙂 Você acertou ${acertos} de ${total} marcadas. Revise e tente novamente!${perdMsg}`;
+  } else {
+    res.className = 'resultado reprovado';
+    res.innerHTML = `💪 Você acertou ${acertos} de ${total} marcadas. Releia as regras e tente de novo!${perdMsg}`;
+  }
+}
+
+// ─── GABARITO ──────────────────────────────────────────────────────
+function verGabarito() {
+  const g = document.getElementById('gabarito');
+  if (g.style.display === 'block') { g.style.display = 'none'; return; }
+  g.style.display = 'block';
+
+  const chips = (arr, cls) => arr.map(w=>`<span class="g-chip ${cls}">${w}</span>`).join('');
+
+  g.innerHTML = `<h3>🔑 Gabarito — Respondoj</h3>
+
+    <div class="gabarito-secao">a. Substantivos em português — singular:</div>
+    <div class="gabarito-chips">
+      ${chips(["Espiritismo","visão","entendimento","mentalidade","dignidade","conhecimento","justiça"],"g-ss")}
+    </div>
+
+    <div class="gabarito-secao">a. Substantivos em português — plural:</div>
+    <div class="gabarito-chips">
+      ${chips(["horizontes","fases","criaturas","obras"],"g-sp")}
+    </div>
+
+    <div class="gabarito-secao">b. Substantivos em Esperanto — singular (terminam em -o):</div>
+    <div class="gabarito-chips">
+      ${chips(["Spiritismo","vidado","kompreno","menso","digno","kono","justeco"],"g-eos")}
+    </div>
+
+    <div class="gabarito-secao">b. Substantivos em Esperanto — plural (terminam em -oj / -ojn):</div>
+    <div class="gabarito-chips">
+      ${chips(["horizontojn","fazoj","kreitojn","faroj"],"g-eop")}
+    </div>
+
+    <div class="gabarito-secao">b. Adjetivos em Esperanto — singular (terminam em -a):</div>
+    <div class="gabarito-chips">
+      ${chips(["ĝenerala","sana","tera","homa","esenca","donita"],"g-eas")}
+    </div>
+
+    <div class="gabarito-secao">b. Adjetivos em Esperanto — plural (terminam em -aj / -ajn):</div>
+    <div class="gabarito-chips">
+      ${chips(["novajn","evoluaj"],"g-eap")}
+    </div>
+
+    <div class="gabarito-nota">
+      💡 Dica: Em Esperanto -o = substantivo · -a = adjetivo · -oj/-ojn = plural de substantivo · -aj/-ajn = plural de adjetivo.
+    </div>`;
+}
+
+// ─── LIMPAR ────────────────────────────────────────────────────────
+function limpar() {
+  Object.keys(estadoA).forEach(id => { estadoA[id] = null; });
+  Object.keys(estadoB).forEach(id => { estadoB[id] = null; });
+  document.querySelectorAll('.palavra').forEach(el => {
+    el.className = 'palavra';
+  });
+  atualizarContadores('A'); atualizarContadores('B');
+  document.getElementById('listaA').innerHTML = '<span class="placeholder">Nenhuma palavra marcada ainda...</span>';
+  document.getElementById('listaB').innerHTML = '<span class="placeholder">Nenhuma palavra marcada ainda...</span>';
+  document.getElementById('resultado').style.display = 'none';
+  document.getElementById('gabarito').style.display  = 'none';
+}
+
+// ─── INIT ──────────────────────────────────────────────────────────
+renderTexto('textoA', textoAPT, 'A');
+renderTexto('textoB', textoBEO, 'B');
+</script>
+</body>
+</html>
