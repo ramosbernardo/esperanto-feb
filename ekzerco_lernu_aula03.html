@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lernu Esperanton – Aula 03 – Verbos na música</title>
+<style>
+  body { font-family: Arial, sans-serif; font-size: 18px; background: #f9f9f9; color: #222; margin: 0; padding: 20px; }
+
+  .cabecalho { background: #1a5c3a; color: white; padding: 20px 24px; border-radius: 10px; margin-bottom: 24px; }
+  .cabecalho h1 { margin: 0 0 6px; font-size: 22px; }
+  .cabecalho p  { margin: 0; font-size: 15px; opacity: 0.85; }
+
+  .instrucao {
+    background: #e8f5ee;
+    border: 1px solid #b2d8c0;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    font-size: 17px;
+    line-height: 1.8;
+  }
+  .instrucao strong { color: #1a5c3a; }
+
+  /* INTRO BILÍNGUE */
+  .intro-bilingue {
+    background: white;
+    border-left: 6px solid #1a5c3a;
+    padding: 18px 20px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 24px;
+    font-size: 16px;
+    line-height: 1.8;
+    color: #333;
+  }
+  .intro-bilingue h2 { font-size: 15px; color: #1a5c3a; margin: 0 0 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .intro-bilingue .pt { margin-bottom: 10px; }
+  .intro-bilingue .eo { color: #1a4a7a; font-style: italic; }
+
+  /* MÚSICA — colunas lado a lado */
+  .musica-wrap {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .musica-col {
+    flex: 1;
+    min-width: 260px;
+    border-radius: 8px;
+    padding: 18px 20px;
+    line-height: 2.2;
+    font-size: 17px;
+  }
+  .musica-col.eo {
+    background: white;
+    border-left: 6px solid #1a5c3a;
+    border-radius: 0 8px 8px 0;
+  }
+  .musica-col.pt {
+    background: #fef9ec;
+    border-left: 6px solid #f0c040;
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: #555;
+  }
+  .musica-col h3 { font-size: 14px; margin: 0 0 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .musica-col.eo h3 { color: #1a5c3a; }
+  .musica-col.pt h3 { color: #7d5a00; }
+  .verso { display: block; }
+
+  /* PALAVRAS CLICÁVEIS na música */
+  .palavra {
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 1px 4px;
+    margin: 1px;
+    transition: background 0.15s, color 0.15s;
+    user-select: none;
+  }
+  .palavra:hover { background: #d4edda; }
+  .palavra.marcada { background: #1a5c3a; color: white; border-radius: 4px; }
+  .palavra.correta { background: #27ae60; color: white; border-radius: 4px; outline: 2px solid #1a6e3a; }
+  .palavra.errada  { background: #c0392b; color: white; border-radius: 4px; }
+  .palavra.perdida { background: #f0c040; color: #333; border-radius: 4px; }
+  .pont { color: #333; }
+
+  /* REGRA */
+  .regra {
+    background: #fef9ec;
+    border: 1px solid #f0c040;
+    border-left: 6px solid #f0c040;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    font-size: 16px;
+    line-height: 1.9;
+  }
+  .regra strong { color: #7d5a00; }
+
+  /* TABELA DE TERMINAÇÕES */
+  .tabela-wrap { margin-bottom: 24px; overflow-x: auto; }
+  table.terminacoes {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  table.terminacoes th {
+    background: #1a5c3a;
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 15px;
+  }
+  table.terminacoes td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #e0f0e8;
+    vertical-align: middle;
+  }
+  table.terminacoes tr:last-child td { border-bottom: none; }
+  table.terminacoes tr:nth-child(even) td { background: #f5fbf7; }
+  table.terminacoes td:first-child { font-weight: bold; color: #1a5c3a; font-size: 18px; font-family: monospace; }
+  table.terminacoes td:nth-child(2) { color: #1a4a7a; font-weight: bold; }
+  table.terminacoes td:nth-child(3) { color: #666; font-style: italic; font-size: 15px; }
+
+  /* PERGUNTAS / SEÇÃO */
+  .secao { background: white; border: 1px solid #ddd; border-radius: 10px; padding: 20px 22px; margin-bottom: 20px; }
+  .secao h3 { font-size: 18px; color: #1a5c3a; margin: 0 0 4px; }
+  .secao .subtitulo { font-size: 15px; color: #555; margin: 0 0 16px; background: #f5fbf7; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #1a5c3a; }
+  .secao .subtitulo-pt { font-size: 14px; color: #888; font-style: italic; }
+
+  /* CONTADOR */
+  .contador { font-size: 14px; color: #1a5c3a; font-weight: bold; margin-bottom: 12px; padding: 6px 14px; background: #f5fbf7; border-radius: 20px; display: inline-block; }
+
+  /* LISTA MARCADAS */
+  .lista-marcadas {
+    min-height: 38px;
+    background: #f9f9f9;
+    border: 1px dashed #ccc;
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+  }
+  .lista-marcadas .placeholder { color: #aaa; font-size: 14px; font-style: italic; }
+  .tag { background: #1a5c3a; color: white; border-radius: 20px; padding: 3px 12px; font-size: 15px; font-weight: bold; }
+
+  /* PERGUNTA 2 — terminações */
+  .linha { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; padding: 10px 14px; background: #f9f9f9; border-radius: 8px; }
+  .linha label { font-size: 16px; color: #444; min-width: 200px; font-weight: bold; }
+  .linha input {
+    font-size: 17px; padding: 8px 12px;
+    border: 2px solid #ccc; border-radius: 6px;
+    width: 160px; outline: none; font-family: Arial, sans-serif;
+  }
+  .linha input:focus  { border-color: #1a5c3a; }
+  .linha input.certo  { border-color: #27ae60; background: #f0faf4; }
+  .linha input.errado { border-color: #c0392b; background: #fdf3f2; }
+  .feedback { font-size: 15px; font-weight: bold; display: none; }
+  .feedback.ok  { color: #27ae60; display: inline; }
+  .feedback.nao { color: #c0392b; display: inline; }
+
+  /* BOTÕES */
+  .botoes { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+  .btn { font-size: 17px; font-weight: bold; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; }
+  .btn-verificar { background: #1a5c3a; color: white; }
+  .btn-gabarito  { background: #f0c040; color: #333; }
+  .btn-limpar    { background: white; color: #1a5c3a; border: 2px solid #1a5c3a; }
+
+  .resultado { display: none; margin-top: 20px; padding: 16px 20px; border-radius: 8px; font-size: 18px; font-weight: bold; }
+  .aprovado  { background: #e8f8ef; color: #1a6e3a; border: 2px solid #27ae60; }
+  .revisao   { background: #fef9ec; color: #7d5a00; border: 2px solid #f0c040; }
+  .reprovado { background: #fdecea; color: #922b21; border: 2px solid #c0392b; }
+
+  .gabarito { display: none; margin-top: 20px; background: #e8f5ee; border-radius: 8px; padding: 18px 20px; border: 1px solid #b2d8c0; }
+  .gabarito h3 { color: #1a5c3a; margin: 0 0 14px; font-size: 17px; }
+  .gabarito-secao { font-size: 15px; color: #555; margin: 14px 0 8px; font-weight: bold; }
+  .gabarito-item { font-size: 16px; margin-bottom: 8px; padding: 10px 14px; background: white; border-radius: 6px; border-left: 4px solid #1a5c3a; line-height: 1.7; }
+  .gabarito-item strong { color: #1a5c3a; font-size: 17px; font-family: monospace; }
+  .gabarito-item span { color: #666; font-size: 14px; }
+  .gabarito-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+  .g-chip { background: #1a5c3a; color: white; border-radius: 20px; padding: 4px 14px; font-size: 15px; font-weight: bold; }
+  .g-nota { font-size: 14px; color: #555; font-style: italic; padding: 8px 12px; background: white; border-radius: 6px; border-left: 3px solid #f0c040; margin-top: 8px; }
+</style>
+</head>
+<body>
+
+<!-- CABEÇALHO -->
+<div class="cabecalho">
+  <h1>Lernu Esperanton! — Verbos na música</h1>
+  <p>Aula 03 — A Ideia da União dos 3Es · Lernu iom pli!</p>
+</div>
+
+<!-- INSTRUÇÃO -->
+<div class="instrucao">
+  🎵 <strong>LERNU IOM PLI!</strong><br>
+  O Esperanto tem muitas músicas que foram traduzidas para atender o público infantil. Dentre elas, <strong>"Lernu Esperanton"</strong>, com texto de Sylla Chaves e música do cancioneiro popular brasileiro, <strong>"O cravo brigou com a rosa"</strong>. Vamos aprender?
+</div>
+
+<!-- INTRO BILÍNGUE -->
+<div class="intro-bilingue">
+  <h2>📖 Contexto / Kunteksto</h2>
+  <div class="pt">O Esperanto tem muitas músicas que foram traduzidas para atender o público infantil. Dentre elas, "Lernu Esperanton", com texto de Sylla Chaves e música do cancioneiro popular brasileiro, "O cravo brigou com a rosa". Vamos aprender?</div>
+  <div class="eo">Esperanto havas multajn kantojn, kiuj estis tradukitaj por servi la infanan publikon. Inter ili troviĝas "Lernu Esperanton", kun teksto de Sylla Chaves kaj melodio el la popola brazila kantaro, "O cravo brigou com a rosa". Ĉu ni lernu ĝin?</div>
+</div>
+
+<!-- MÚSICA LADO A LADO -->
+<div class="musica-wrap">
+  <!-- ESPERANTO — clicável -->
+  <div class="musica-col eo">
+    <h3>🎵 Esperanto — clique nos verbos!</h3>
+    <div id="musicaEO"></div>
+  </div>
+  <!-- PORTUGUÊS — referência -->
+  <div class="musica-col pt">
+    <h3>🇧🇷 Tradução em português</h3>
+    <span class="verso">Aprenda, meu amigo!</span><br>
+    <span class="verso">A língua do futuro!</span><br>
+    <span class="verso">Com uma língua internacional,</span><br>
+    <span class="verso">O mundo será melhor!</span><br>
+    <span class="verso">Escute esta canção!</span><br>
+    <span class="verso">Amigo, escute-me!</span><br>
+    <span class="verso">Se você aprender esperanto,</span><br>
+    <span class="verso">O mundo o entenderá.</span>
+  </div>
+</div>
+
+<!-- REGRA -->
+<div class="regra">
+  📌 <strong>Regra:</strong> Os tempos verbais em Esperanto são três: presente, passado e futuro. Temos também os modos condicional, imperativo e infinitivo.<br><br>
+  <strong>Terminações verbais:</strong> Presente - AS; Passado - IS; Futuro - OS; Condicional - US; Imperativo - U; Infinitivo - I.
+</div>
+
+<!-- TABELA DE TERMINAÇÕES -->
+<div class="tabela-wrap">
+  <table class="terminacoes">
+    <tr>
+      <th>Terminação</th>
+      <th>Modo / Tempo</th>
+      <th>Exemplo</th>
+    </tr>
+    <tr><td>-AS</td><td>Presente</td><td>lernas = aprende</td></tr>
+    <tr><td>-IS</td><td>Passado</td><td>lernis = aprendeu</td></tr>
+    <tr><td>-OS</td><td>Futuro</td><td>lernos = aprenderá</td></tr>
+    <tr><td>-US</td><td>Condicional</td><td>lernus = aprenderia</td></tr>
+    <tr><td>-U</td><td>Imperativo</td><td>lernu = aprenda!</td></tr>
+    <tr><td>-I</td><td>Infinitivo</td><td>lerni = aprender</td></tr>
+  </table>
+</div>
+
+<!-- PERGUNTA 1 — clicar verbos -->
+<div class="secao">
+  <h3>1. Quais os verbos que você identifica na música?</h3>
+  <div class="subtitulo">
+    Kiujn verbojn vi identigas en la kanto?<br>
+    <span class="subtitulo-pt">Clique nas palavras da música (coluna esquerda) que você identifica como verbos.</span>
+  </div>
+  <div class="contador" id="contMarcados">0 palavra(s) marcada(s)</div>
+  <div style="font-size:14px;color:#555;margin-top:8px;">Verbos marcados:</div>
+  <div class="lista-marcadas" id="listaMarcados">
+    <span class="placeholder">Nenhuma palavra marcada ainda...</span>
+  </div>
+</div>
+
+<!-- PERGUNTA 2 — terminações -->
+<div class="secao">
+  <h3>2. Quais as suas finalizações?</h3>
+  <div class="subtitulo">
+    Kiuj estas iliaj finaĵoj?<br>
+    <span class="subtitulo-pt">Para cada verbo que você identificou, escreva sua terminação e o modo/tempo verbal.</span>
+  </div>
+
+  <div class="linha">
+    <label>lernu → terminação:</label>
+    <input type="text" id="t1" placeholder="ex: -u" autocomplete="off">
+    <span class="feedback" id="ft1"></span>
+    <input type="text" id="m1" placeholder="modo / tempo" autocomplete="off" style="width:200px;">
+    <span class="feedback" id="fm1"></span>
+  </div>
+  <div class="linha">
+    <label>aŭskultu → terminação:</label>
+    <input type="text" id="t2" placeholder="ex: -u" autocomplete="off">
+    <span class="feedback" id="ft2"></span>
+    <input type="text" id="m2" placeholder="modo / tempo" autocomplete="off" style="width:200px;">
+    <span class="feedback" id="fm2"></span>
+  </div>
+  <div class="linha">
+    <label>estos → terminação:</label>
+    <input type="text" id="t3" placeholder="ex: -os" autocomplete="off">
+    <span class="feedback" id="ft3"></span>
+    <input type="text" id="m3" placeholder="modo / tempo" autocomplete="off" style="width:200px;">
+    <span class="feedback" id="fm3"></span>
+  </div>
+  <div class="linha">
+    <label>lernos → terminação:</label>
+    <input type="text" id="t4" placeholder="ex: -os" autocomplete="off">
+    <span class="feedback" id="ft4"></span>
+    <input type="text" id="m4" placeholder="modo / tempo" autocomplete="off" style="width:200px;">
+    <span class="feedback" id="fm4"></span>
+  </div>
+  <div class="linha">
+    <label>komprenos → terminação:</label>
+    <input type="text" id="t5" placeholder="ex: -os" autocomplete="off">
+    <span class="feedback" id="ft5"></span>
+    <input type="text" id="m5" placeholder="modo / tempo" autocomplete="off" style="width:200px;">
+    <span class="feedback" id="fm5"></span>
+  </div>
+</div>
+
+<!-- BOTÕES -->
+<div class="botoes">
+  <button class="btn btn-verificar" onclick="verificar()">✔ Verificar</button>
+  <button class="btn btn-gabarito"  onclick="verGabarito()">🔑 Ver gabarito</button>
+  <button class="btn btn-limpar"    onclick="limpar()">↺ Limpar</button>
+</div>
+
+<div class="resultado" id="resultado"></div>
+<div class="gabarito"  id="gabarito"></div>
+
+<script>
+// ─── LETRA DA MÚSICA (original) ───────────────────────────────────
+const versos = [
+  "Vi lernu, amiko mia",
+  "La lingvon de la estonto!",
+  "Kun lingvo internacia,",
+  "Pli bona estos la mondo!",
+  "Aŭskultu ĉi tiun kanton!",
+  "Amiko, aŭskultu min!",
+  "Se vi lernos Esperanton,",
+  "La mondo komprenos vin."
+];
+
+// ─── GABARITO VERBOS (apenas verbos reais na música) ───────────────
+const gabVerbos = new Set(["lernu","aŭskultu","estos","lernos","komprenos"]);
+
+// ─── GABARITO TERMINAÇÕES ─────────────────────────────────────────
+const gabTerminacoes = {
+  t1: ["-u","u"],           // lernu
+  m1: ["imperativo","modo imperativo"],
+  t2: ["-u","u"],           // aŭskultu
+  m2: ["imperativo","modo imperativo"],
+  t3: ["-os","os"],         // estos
+  m3: ["futuro","tempo futuro","futuro do indicativo"],
+  t4: ["-os","os"],         // lernos
+  m4: ["futuro","tempo futuro","futuro do indicativo"],
+  t5: ["-os","os"],         // komprenos
+  m5: ["futuro","tempo futuro","futuro do indicativo"],
+};
+
+// ─── ESTADO ───────────────────────────────────────────────────────
+const estado = {};
+
+// ─── RENDER MÚSICA ────────────────────────────────────────────────
+function limparPalavra(w) {
+  return w.replace(/[^a-zA-ZĉĝĥĵŝŭĈĜĤĴŜŬŭ]/gi,"").toLowerCase();
+}
+
+function renderMusica() {
+  const container = document.getElementById("musicaEO");
+  let html = ""; let idx = 0;
+  versos.forEach((verso, vi) => {
+    const tokens = verso.split(/(\s+)/);
+    tokens.forEach(token => {
+      if (/^\s+$/.test(token)) { html += token; return; }
+      const match = token.match(/^(["""'«»()\[\]]*)([a-zA-ZĉĝĥĵŝŭĈĜĤĴŜŬŭ]+)([.,;:!?"""'»)\]]*)$/i);
+      if (match) {
+        const pre = match[1], word = match[2], post = match[3];
+        const id = "v_" + idx++;
+        const wl = limparPalavra(word);
+        estado[id] = false;
+        html += (pre  ? `<span class="pont">${pre}</span>`  : "");
+        html += `<span class="palavra" id="${id}" data-word="${wl}" onclick="togglePalavra(this)">${word}</span>`;
+        html += (post ? `<span class="pont">${post}</span>` : "");
+      } else {
+        html += `<span class="pont">${token}</span>`;
+      }
+    });
+    if (vi < versos.length - 1) html += "<br>";
+  });
+  container.innerHTML = html;
+}
+
+// ─── TOGGLE ───────────────────────────────────────────────────────
+function togglePalavra(el) {
+  const id = el.id;
+  estado[id] = !estado[id];
+  el.classList.remove('marcada','correta','errada','perdida');
+  if (estado[id]) el.classList.add('marcada');
+  atualizarContador();
+  atualizarLista();
+}
+
+function atualizarContador() {
+  const n = Object.values(estado).filter(v=>v).length;
+  document.getElementById('contMarcados').textContent = `${n} palavra(s) marcada(s)`;
+}
+
+function atualizarLista() {
+  const lista = document.getElementById('listaMarcados');
+  const marcadas = Object.entries(estado).filter(([,v])=>v);
+  if (marcadas.length === 0) {
+    lista.innerHTML = '<span class="placeholder">Nenhuma palavra marcada ainda...</span>'; return;
+  }
+  let html = '';
+  marcadas.forEach(([id]) => {
+    const el = document.getElementById(id);
+    if (el) html += `<span class="tag">${el.textContent}</span>`;
+  });
+  lista.innerHTML = html;
+}
+
+// ─── VERIFICAR ────────────────────────────────────────────────────
+function norm(s) {
+  return s.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/^-/,"");
+}
+
+function verificar() {
+  let acertos = 0, erros = 0, perdidas = 0;
+
+  // Parte 1 — verbos clicados
+  Object.entries(estado).forEach(([id, marcado]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const w = el.dataset.word;
+    el.classList.remove('marcada','correta','errada','perdida');
+    if (!marcado) return;
+    if (gabVerbos.has(w)) { el.classList.add('correta'); acertos++; }
+    else                   { el.classList.add('errada');  erros++;   }
+  });
+  // Mostra perdidas
+  document.querySelectorAll('.palavra').forEach(el => {
+    const w = el.dataset.word;
+    if (!el.classList.contains('correta') && !el.classList.contains('errada')) {
+      if (gabVerbos.has(w)) { el.classList.add('perdida'); perdidas++; }
+    }
+  });
+
+  // Parte 2 — terminações
+  const camposTerminacoes = ['t1','m1','t2','m2','t3','m3','t4','m4','t5','m5'];
+  camposTerminacoes.forEach(id => {
+    const inp = document.getElementById(id);
+    const fb  = document.getElementById("f" + id);
+    if (!inp || !fb || !inp.value.trim()) return;
+    inp.classList.remove('certo','errado');
+    fb.className = 'feedback'; fb.textContent = '';
+    const val = norm(inp.value);
+    const resps = gabTerminacoes[id];
+    if (resps && resps.some(r => norm(r) === val || val.includes(norm(r)) || norm(r).includes(val))) {
+      inp.classList.add('certo'); fb.className = 'feedback ok'; fb.textContent = '✓'; acertos++;
+    } else {
+      inp.classList.add('errado'); fb.className = 'feedback nao'; fb.textContent = '✗'; erros++;
+    }
+  });
+
+  const total = acertos + erros;
+  const res = document.getElementById('resultado');
+  res.style.display = 'block';
+
+  if (total === 0) {
+    res.className = 'resultado revisao';
+    res.innerHTML = '✏️ Clique nos verbos da música e preencha as terminações para verificar!'; return;
+  }
+
+  const pct = Math.round(acertos / total * 100);
+  const perdMsg = perdidas > 0 ? ' Verbos em <span style="background:#f0c040;color:#333;padding:1px 8px;border-radius:4px;">amarelo</span> são corretos não marcados.' : '';
+  if (pct >= 80) {
+    res.className = 'resultado aprovado';
+    res.innerHTML = `🎉 Parabéns! Você acertou ${acertos} de ${total} — Bonega!${perdMsg}`;
+  } else if (pct >= 50) {
+    res.className = 'resultado revisao';
+    res.innerHTML = `🙂 Você acertou ${acertos} de ${total}. Revise e tente novamente!${perdMsg}`;
+  } else {
+    res.className = 'resultado reprovado';
+    res.innerHTML = `💪 Você acertou ${acertos} de ${total}. Releia as terminações e tente de novo!${perdMsg}`;
+  }
+}
+
+// ─── GABARITO ─────────────────────────────────────────────────────
+function verGabarito() {
+  const g = document.getElementById('gabarito');
+  if (g.style.display === 'block') { g.style.display = 'none'; return; }
+  g.style.display = 'block';
+  g.innerHTML = `<h3>🔑 Gabarito — Respondoj</h3>
+
+    <div class="gabarito-secao">1. Verbos identificados na música / Kiujn verbojn vi identigas en la kanto?</div>
+    <div class="gabarito-chips">
+      <span class="g-chip">lernu</span>
+      <span class="g-chip">aŭskultu</span>
+      <span class="g-chip">estos</span>
+      <span class="g-chip">lernos</span>
+      <span class="g-chip">komprenos</span>
+    </div>
+
+    <div class="gabarito-secao">2. Terminações / Kiuj estas iliaj finaĵoj?</div>
+    <div class="gabarito-item">
+      <strong>lernu</strong> → terminação <strong>-u</strong>
+      <span>Imperativo — aprenda!</span>
+    </div>
+    <div class="gabarito-item">
+      <strong>aŭskultu</strong> → terminação <strong>-u</strong>
+      <span>Imperativo — escute!</span>
+    </div>
+    <div class="gabarito-item">
+      <strong>estos</strong> → terminação <strong>-os</strong>
+      <span>Futuro — será</span>
+    </div>
+    <div class="gabarito-item">
+      <strong>lernos</strong> → terminação <strong>-os</strong>
+      <span>Futuro — aprenderá / aprenderás</span>
+    </div>
+    <div class="gabarito-item">
+      <strong>komprenos</strong> → terminação <strong>-os</strong>
+      <span>Futuro — entenderá / entenderás</span>
+    </div>
+    <div class="g-nota">💡 Na música há 2 verbos no imperativo (-u) e 3 verbos no futuro (-os). Nenhum verbo no presente, passado, condicional ou infinitivo!</div>`;
+}
+
+// ─── LIMPAR ───────────────────────────────────────────────────────
+function limpar() {
+  Object.keys(estado).forEach(id => { estado[id] = false; });
+  document.querySelectorAll('.palavra').forEach(el => { el.className = 'palavra'; });
+  atualizarContador();
+  document.getElementById('listaMarcados').innerHTML = '<span class="placeholder">Nenhuma palavra marcada ainda...</span>';
+
+  ['t1','m1','t2','m2','t3','m3','t4','m4','t5','m5'].forEach(id => {
+    const inp = document.getElementById(id);
+    const fb  = document.getElementById('f'+id);
+    if (inp) { inp.value = ''; inp.classList.remove('certo','errado'); }
+    if (fb)  { fb.className = 'feedback'; fb.textContent = ''; }
+  });
+
+  document.getElementById('resultado').style.display = 'none';
+  document.getElementById('gabarito').style.display  = 'none';
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────
+renderMusica();
+</script>
+</body>
+</html>
