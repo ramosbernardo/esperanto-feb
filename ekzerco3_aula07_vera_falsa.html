@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ekzerco 3 – Aula 07 – Skribu V aŭ F</title>
+<style>
+  body { font-family: Arial, sans-serif; font-size: 18px; background: #f9f9f9; color: #222; margin: 0; padding: 20px; }
+
+  .cabecalho { background: #1a5c3a; color: white; padding: 20px 24px; border-radius: 10px; margin-bottom: 24px; }
+  .cabecalho h1 { margin: 0 0 6px; font-size: 22px; }
+  .cabecalho p  { margin: 0; font-size: 15px; opacity: 0.85; }
+
+  .instrucao {
+    background: #e8f5ee;
+    border: 1px solid #b2d8c0;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 28px;
+    font-size: 17px;
+    line-height: 1.8;
+  }
+  .instrucao strong { color: #1a5c3a; }
+
+  /* TEXTO BASE */
+  .texto-base {
+    background: white;
+    border-left: 6px solid #1a5c3a;
+    padding: 18px 20px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 28px;
+    font-size: 16px;
+    line-height: 1.9;
+  }
+  .texto-base h2 { font-size: 15px; color: #1a5c3a; margin: 0 0 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .texto-base .pt { color: #333; margin-bottom: 6px; }
+  .texto-base .eo { color: #1a4a7a; font-style: italic; margin-bottom: 10px; }
+
+  /* REGRA */
+  .regra {
+    background: #fef9ec;
+    border: 1px solid #f0c040;
+    border-left: 6px solid #f0c040;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 28px;
+    font-size: 16px;
+    line-height: 1.8;
+  }
+  .regra strong { color: #7d5a00; }
+
+  /* SEÇÃO */
+  .secao { background: white; border: 1px solid #ddd; border-radius: 10px; padding: 20px 22px; margin-bottom: 20px; }
+  .secao h3 { font-size: 18px; color: #1a5c3a; margin: 0 0 4px; }
+  .secao .subtitulo { font-size: 15px; color: #555; margin: 0 0 20px; background: #f5fbf7; padding: 8px 12px; border-radius: 6px; border-left: 3px solid #1a5c3a; }
+
+  /* ITEM */
+  .item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px 16px;
+    margin-bottom: 16px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    flex-wrap: wrap;
+  }
+
+  /* BOTÕES V/F */
+  .vf-grupo { display: flex; gap: 10px; flex-shrink: 0; margin-top: 2px; }
+  .btn-vf {
+    font-size: 18px;
+    font-weight: bold;
+    width: 50px;
+    height: 50px;
+    border-radius: 6px;
+    border: 2px solid #ccc;
+    background: white;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    transition: border-color 0.15s, background 0.15s, color 0.15s;
+  }
+  .btn-vf:hover    { border-color: #1a5c3a; background: #f5fbf7; }
+  .btn-vf.selecionado { border-color: #1a5c3a; background: #1a5c3a; color: white; }
+  .btn-vf.correto     { border-color: #27ae60; background: #e8f8ef; color: #1a6e3a; }
+  .btn-vf.errado      { border-color: #c0392b; background: #fdecea; color: #922b21; }
+
+  /* TEXTO DA AFIRMAÇÃO */
+  .item-texto { flex: 1; min-width: 220px; }
+  .item-letra { font-weight: bold; color: #1a5c3a; font-size: 16px; margin-bottom: 5px; }
+  .frase-eo   { font-size: 17px; font-weight: bold; color: #1a4a7a; margin-bottom: 4px; line-height: 1.5; }
+  .frase-pt   { font-size: 15px; color: #666; font-style: italic; }
+
+  .feedback-item {
+    font-size: 15px;
+    font-weight: bold;
+    display: none;
+    margin-top: 8px;
+    padding: 6px 10px;
+    border-radius: 6px;
+  }
+  .feedback-item.ok  { display: block; color: #1a6e3a; background: #e8f8ef; border: 1px solid #27ae60; }
+  .feedback-item.nao { display: block; color: #922b21; background: #fdecea; border: 1px solid #c0392b; }
+
+  /* BOTÕES */
+  .botoes { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+  .btn { font-size: 17px; font-weight: bold; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; }
+  .btn-verificar { background: #1a5c3a; color: white; }
+  .btn-gabarito  { background: #f0c040; color: #333; }
+  .btn-limpar    { background: white; color: #1a5c3a; border: 2px solid #1a5c3a; }
+
+  .resultado { display: none; margin-top: 20px; padding: 16px 20px; border-radius: 8px; font-size: 18px; font-weight: bold; }
+  .aprovado  { background: #e8f8ef; color: #1a6e3a; border: 2px solid #27ae60; }
+  .revisao   { background: #fef9ec; color: #7d5a00; border: 2px solid #f0c040; }
+  .reprovado { background: #fdecea; color: #922b21; border: 2px solid #c0392b; }
+
+  .gabarito { display: none; margin-top: 20px; background: #e8f5ee; border-radius: 8px; padding: 18px 20px; border: 1px solid #b2d8c0; }
+  .gabarito h3 { color: #1a5c3a; margin: 0 0 14px; font-size: 17px; }
+  .gabarito-item { font-size: 16px; margin-bottom: 10px; padding: 10px 14px; background: white; border-radius: 6px; border-left: 4px solid #1a5c3a; line-height: 1.7; }
+  .gabarito-item strong { color: #1a5c3a; font-size: 17px; }
+  .gabarito-item span { color: #666; font-size: 15px; display: block; margin-top: 3px; }
+  .g-vf { font-size: 22px; font-weight: bold; color: #922b21; margin-right: 8px; }
+</style>
+</head>
+<body>
+
+<div class="cabecalho">
+  <h1>Ekzerco 3 – Skribu V (vera) aŭ F (falsa)</h1>
+  <p>Aula 07 — Atividades de um Centro Espírita · La Spiritisma Domo</p>
+</div>
+
+<div class="instrucao">
+  ✏️ <strong>Ekzerco 3 – Skribu V (vera) aŭ F (falsa):</strong><br>
+  (Escreva V se a afirmação é verdadeira ou F se é falsa.)
+</div>
+
+<!-- TEXTO DE REFERÊNCIA -->
+<div class="texto-base">
+  <h2>📖 Lembre-se do texto / Memoru la tekston</h2>
+  <div class="pt"><strong>Grupos de Estudos:</strong> o estudo da Doutrina Espírita favorece o conhecimento e o autoconhecimento, bem como o despertar da consciência.</div>
+  <div class="eo">Studgrupoj: La studado de la Spiritisma Doktrino favoras la konon kaj memkomprenon, tiel kiel prilumigas la konsciencon.</div>
+  <div class="pt"><strong>Evangelização Espírita:</strong> Atividades com crianças e adolescentes para ensinar as lições do Evangelho.</div>
+  <div class="eo">Spiritisma Evangelizado: Aktivecoj kun infanoj kaj junuloj por instrui la lecionojn de la Evangelio.</div>
+  <div class="pt"><strong>Mocidade Espírita:</strong> Grupo de jovens que se reúne para estudar o Espiritismo. Continuação da Evangelização.</div>
+  <div class="eo">Spiritisma Junulara Grupo: Grupo da gejunuloj, kiuj renkontiĝas por studi Spiritismon. Ĝi estas daŭrigo de Evangelizado.</div>
+  <div class="pt"><strong>Grupo de Estudo do Esperanto:</strong> Conhecer, estudar e divulgar o Espiritismo e o Esperanto é trabalhar com o Mestre Jesus para a construção do Mundo Novo.</div>
+  <div class="eo">Esperanta Studgrupo: Koni, studi kaj disvastigi Spiritismon kaj Esperanton estas labori kun la Majstro Jesuo por konstruado de la Nova Mondo.</div>
+</div>
+
+<div class="regra">
+  💡 <strong>Dica:</strong> Clique em <strong>V</strong> se a afirmação é verdadeira ou em <strong>F</strong> se é falsa. Leia o texto acima antes de responder.
+</div>
+
+<!-- EXERCÍCIO -->
+<div class="secao">
+  <h3>✏️ Verdadeiro ou Falso? / Vera aŭ Falsa?</h3>
+  <div class="subtitulo">Clique no botão V ou F para cada afirmação.</div>
+
+  <!-- ITEM A -->
+  <div class="item" id="item_a">
+    <div class="vf-grupo">
+      <button class="btn-vf" id="va" onclick="selecionar('a','V')">V</button>
+      <button class="btn-vf" id="fa" onclick="selecionar('a','F')">F</button>
+    </div>
+    <div class="item-texto">
+      <div class="item-letra">a)</div>
+      <div class="frase-eo">Spirita studgrupo havas la celon trejni personojn por ke ili fariĝu mediumoj.</div>
+      <div class="frase-pt">(O grupo de estudo espírita tem o objetivo de treinar pessoas para que se tornem médiuns.)</div>
+      <div class="feedback-item" id="fb_a"></div>
+    </div>
+  </div>
+
+  <!-- ITEM B -->
+  <div class="item" id="item_b">
+    <div class="vf-grupo">
+      <button class="btn-vf" id="vb" onclick="selecionar('b','V')">V</button>
+      <button class="btn-vf" id="fb_b_btn" onclick="selecionar('b','F')">F</button>
+    </div>
+    <div class="item-texto">
+      <div class="item-letra">b)</div>
+      <div class="frase-eo">Studgrupo pri Esperanto en spiritisma domo havas la celon praktiki mediuman komunikadon.</div>
+      <div class="frase-pt">(O Grupo de Estudo do Esperanto em um centro espírita tem o objetivo de praticar a comunicação mediúnica.)</div>
+      <div class="feedback-item" id="fb_b"></div>
+    </div>
+  </div>
+
+  <!-- ITEM C -->
+  <div class="item" id="item_c">
+    <div class="vf-grupo">
+      <button class="btn-vf" id="vc" onclick="selecionar('c','V')">V</button>
+      <button class="btn-vf" id="fc" onclick="selecionar('c','F')">F</button>
+    </div>
+    <div class="item-texto">
+      <div class="item-letra">c)</div>
+      <div class="frase-eo">Grupo de junaj spiritistoj havas la solan celon amikiĝi.</div>
+      <div class="frase-pt">(O grupo de jovens espíritas tem o único objetivo de fazer amizades.)</div>
+      <div class="feedback-item" id="fb_c"></div>
+    </div>
+  </div>
+
+  <!-- ITEM D -->
+  <div class="item" id="item_d">
+    <div class="vf-grupo">
+      <button class="btn-vf" id="vd" onclick="selecionar('d','V')">V</button>
+      <button class="btn-vf" id="fd" onclick="selecionar('d','F')">F</button>
+    </div>
+    <div class="item-texto">
+      <div class="item-letra">d)</div>
+      <div class="frase-eo">Spirita evangelizado havas la celon instrui pri la timo antaŭ Dio.</div>
+      <div class="frase-pt">(A evangelização espírita tem o objetivo de ensinar sobre o medo de Deus.)</div>
+      <div class="feedback-item" id="fb_d"></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="botoes">
+  <button class="btn btn-verificar" onclick="verificar()">✔ Verificar</button>
+  <button class="btn btn-gabarito"  onclick="verGabarito()">🔑 Ver gabarito</button>
+  <button class="btn btn-limpar"    onclick="limpar()">↺ Limpar</button>
+</div>
+
+<div class="resultado" id="resultado"></div>
+<div class="gabarito"  id="gabarito"></div>
+
+<script>
+  // Gabarito: todas FALSAS
+  const gabarito = { a:"F", b:"F", c:"F", d:"F" };
+
+  const explicacao = {
+    a: "Falsa — O grupo de estudo serve para conhecer e aprofundar a Doutrina Espírita, não para treinar médiuns.",
+    b: "Falsa — O Grupo de Estudo do Esperanto serve para conhecer, estudar e divulgar o Esperanto e o Espiritismo.",
+    c: "Falsa — A Mocidade Espírita reúne jovens para estudar o Espiritismo, como continuação da Evangelização.",
+    d: "Falsa — A Evangelização Espírita ensina as lições do Evangelho às crianças e adolescentes, não o medo de Deus."
+  };
+
+  const selecionado = { a:null, b:null, c:null, d:null };
+
+  function selecionar(letra, val) {
+    selecionado[letra] = val;
+    const bv = document.getElementById("v" + letra);
+    const bf = letra === "b"
+      ? document.getElementById("fb_b_btn")
+      : document.getElementById("f" + letra);
+
+    if (bv) bv.className = "btn-vf";
+    if (bf) bf.className = "btn-vf";
+
+    const btnSel = val === "V" ? bv : bf;
+    if (btnSel && !btnSel.classList.contains("correto") && !btnSel.classList.contains("errado")) {
+      btnSel.classList.add("selecionado");
+    }
+    const fb = document.getElementById("fb_" + letra);
+    if (fb) { fb.className = "feedback-item"; fb.textContent = ""; }
+  }
+
+  function verificar() {
+    let total = 0, acertos = 0;
+
+    ["a","b","c","d"].forEach(letra => {
+      const val = selecionado[letra];
+      const bv  = document.getElementById("v" + letra);
+      const bf  = letra === "b"
+        ? document.getElementById("fb_b_btn")
+        : document.getElementById("f" + letra);
+      const fb  = document.getElementById("fb_" + letra);
+
+      if (bv) bv.className = "btn-vf";
+      if (bf) bf.className = "btn-vf";
+      if (fb) { fb.className = "feedback-item"; fb.textContent = ""; }
+
+      if (!val) return;
+      total++;
+
+      const btnSel = val === "V" ? bv : bf;
+      const btnCor = gabarito[letra] === "V" ? bv : bf;
+
+      if (val === gabarito[letra]) {
+        if (btnSel) btnSel.classList.add("correto");
+        if (fb) { fb.className = "feedback-item ok"; fb.textContent = "✓ Ĝuste! — " + explicacao[letra]; }
+        acertos++;
+      } else {
+        if (btnSel) btnSel.classList.add("errado");
+        if (btnCor) btnCor.classList.add("correto");
+        if (fb) { fb.className = "feedback-item nao"; fb.textContent = "✗ Malĝuste! — " + explicacao[letra]; }
+      }
+    });
+
+    if (total === 0) {
+      const res = document.getElementById("resultado");
+      res.style.display = "block"; res.className = "resultado revisao";
+      res.innerHTML = "✏️ Clique em V ou F em pelo menos uma afirmação para verificar!"; return;
+    }
+
+    const res = document.getElementById("resultado");
+    res.style.display = "block";
+    const pct = Math.round(acertos / total * 100);
+    if (pct >= 80) {
+      res.className = "resultado aprovado";
+      res.innerHTML = "🎉 Parabéns! Você acertou " + acertos + " de " + total + " — Bonega!";
+    } else if (pct >= 50) {
+      res.className = "resultado revisao";
+      res.innerHTML = "🙂 Você acertou " + acertos + " de " + total + ". Revise e tente novamente!";
+    } else {
+      res.className = "resultado reprovado";
+      res.innerHTML = "💪 Você acertou " + acertos + " de " + total + ". Releia o texto e tente de novo!";
+    }
+  }
+
+  function verGabarito() {
+    const g = document.getElementById("gabarito");
+    if (g.style.display === "block") { g.style.display = "none"; return; }
+    g.style.display = "block";
+    g.innerHTML = `<h3>🔑 Gabarito — Solvoj</h3>
+      <div class="gabarito-item">
+        <span class="g-vf">F</span><strong>a)</strong> Spirita studgrupo havas la celon trejni personojn por ke ili fariĝu mediumoj.
+        <span>Falsa — O grupo de estudo serve para conhecer e aprofundar a Doutrina Espírita, não para treinar médiuns.</span>
+      </div>
+      <div class="gabarito-item">
+        <span class="g-vf">F</span><strong>b)</strong> Studgrupo pri Esperanto en spiritisma domo havas la celon praktiki mediuman komunikadon.
+        <span>Falsa — O Grupo de Estudo do Esperanto serve para conhecer, estudar e divulgar o Esperanto e o Espiritismo.</span>
+      </div>
+      <div class="gabarito-item">
+        <span class="g-vf">F</span><strong>c)</strong> Grupo de junaj spiritistoj havas la solan celon amikiĝi.
+        <span>Falsa — A Mocidade Espírita reúne jovens para estudar o Espiritismo, como continuação da Evangelização.</span>
+      </div>
+      <div class="gabarito-item">
+        <span class="g-vf">F</span><strong>d)</strong> Spirita evangelizado havas la celon instrui pri la timo antaŭ Dio.
+        <span>Falsa — A Evangelização Espírita ensina as lições do Evangelho, não o medo de Deus.</span>
+      </div>`;
+  }
+
+  function limpar() {
+    ["a","b","c","d"].forEach(letra => {
+      selecionado[letra] = null;
+      const bv = document.getElementById("v" + letra);
+      const bf = letra === "b"
+        ? document.getElementById("fb_b_btn")
+        : document.getElementById("f" + letra);
+      if (bv) bv.className = "btn-vf";
+      if (bf) bf.className = "btn-vf";
+      const fb = document.getElementById("fb_" + letra);
+      if (fb) { fb.className = "feedback-item"; fb.textContent = ""; }
+    });
+    document.getElementById("resultado").style.display = "none";
+    document.getElementById("gabarito").style.display  = "none";
+  }
+</script>
+</body>
+</html>
